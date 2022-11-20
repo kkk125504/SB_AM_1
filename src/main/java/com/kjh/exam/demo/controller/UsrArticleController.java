@@ -65,6 +65,7 @@ public class UsrArticleController {
 		}
 
 		articleService.modifyArticle(id, title, body);
+		article = articleService.getArticle(id);
 		return article;
 	}
 }
