@@ -25,11 +25,12 @@
 	</delete>
 
 	<update id="modifyArticle">
-		UPDATE article
-		SET updateDate = NOW(),
-		title = #{title},
-		`body`= #{body}
-		WHERE id = #{id}
+		UPDATE article		
+		<set>
+		updateDate = NOW(),
+		<if test="title != null">title = #{title},</if>
+		<if test="body != null">`body`= #{body}</if>
+		</set>
 	</update>
 
 	<select id="getLastInsertId" resultType="int">
