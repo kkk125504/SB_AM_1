@@ -13,13 +13,14 @@ public class ArticleService {
 	// 인스턴스 변수
 	private ArticleRepository articleRepository;
 
-	@Autowired	
-	public ArticleService(ArticleRepository articleRepository){
-		this.articleRepository =articleRepository;
-	}	
+	@Autowired
+	public ArticleService(ArticleRepository articleRepository) {
+		this.articleRepository = articleRepository;
+	}
 
-	public Article writeArticle(String title, String body) {
-		return articleRepository.writeArticle(title, body);
+	public int writeArticle(String title, String body) {
+		articleRepository.writeArticle(title, body);
+		return articleRepository.getLastInsertId();
 	}
 
 	public Article getArticle(int id) {
@@ -31,7 +32,7 @@ public class ArticleService {
 	}
 
 	public void modifyArticle(int id, String title, String body) {
-		articleRepository.modifyArticle(id,title,body);
+		articleRepository.modifyArticle(id, title, body);
 	}
 
 	public List<Article> getArticles() {
