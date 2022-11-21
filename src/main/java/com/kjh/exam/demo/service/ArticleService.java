@@ -40,8 +40,9 @@ public class ArticleService {
 		articleRepository.modifyArticle(id, title, body);
 	}
 
-	public List<Article> getArticles() {
-		return articleRepository.getArticles();
+	public ResultData getArticles() {
+		List<Article> articles = articleRepository.getArticles();
+		return ResultData.from("S-1", "Article List", articles);
 	}
 
 }
