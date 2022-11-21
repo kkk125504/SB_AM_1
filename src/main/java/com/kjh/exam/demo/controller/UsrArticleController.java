@@ -33,7 +33,7 @@ public class UsrArticleController {
 		int id = (int) writeRd.getData1();
 		Article article = articleService.getArticle(id);
 
-		return ResultData.from(writeRd.getResultCode(), writeRd.getMsg(), article);
+		return ResultData.newData(writeRd, article);
 	}
 
 	@RequestMapping("usr/article/getArticle")
