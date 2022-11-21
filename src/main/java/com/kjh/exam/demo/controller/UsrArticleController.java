@@ -48,7 +48,7 @@ public class UsrArticleController {
 		int id = (int) writeRd.getData1();
 		Article article = articleService.getArticle(id);
 
-		return ResultData.newData(writeRd, article);
+		return ResultData.newData(writeRd, "article", article);
 	}
 
 	@RequestMapping("usr/article/getArticle")
@@ -59,14 +59,14 @@ public class UsrArticleController {
 		if (article == null) {
 			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
 		}
-		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.", id), article);
+		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.", id), "article", article);
 	}
 
 	@RequestMapping("usr/article/getArticles")
 	@ResponseBody
 	public ResultData<List<Article>> getArticles() {
 		List<Article> articles = articleService.getArticles();
-		return ResultData.from("S-1", "Article List", articles);
+		return ResultData.from("S-1", "게시물 리스트", "articles", articles);
 	}
 
 	@RequestMapping("usr/article/doDelete")
@@ -119,7 +119,7 @@ public class UsrArticleController {
 		}
 
 		ResultData actorCanModifyRd = articleService.actorCanModify(loginedMemberId, article);
-		if(actorCanModifyRd.isFail()){
+		if (actorCanModifyRd.isFail()) {
 			return actorCanModifyRd;
 		}
 

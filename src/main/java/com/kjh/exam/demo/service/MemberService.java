@@ -32,7 +32,7 @@ public class MemberService {
 		memberRepository.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
 		int id = memberRepository.getLastInsertId();
 
-		return ResultData.from("S-1", Ut.f("%s님 회원가입 성공", nickname), id);
+		return ResultData.from("S-1", Ut.f("%s님 회원가입 성공", nickname), "id", id);
 	}
 
 	public Member getMemberById(int id) {
