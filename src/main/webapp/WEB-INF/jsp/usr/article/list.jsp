@@ -19,13 +19,16 @@
 							<tr>
 								<td>${article.id }</td>
 								<td>${article.regDate.substring(0,10)}</td>
-								<td>${article.title}</td>
+								<td><a href="../article/detail?id=${article.id}">${article.title}</a></td>
 							</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 		</div>
+		<div class= "btns">
+			<button type="button" onclick="history.back()">뒤로가기</button>
+		</div>
 	</div>
-</section>
+</section>	
 
 <%@ include file="../common/foot.jspf" %>
