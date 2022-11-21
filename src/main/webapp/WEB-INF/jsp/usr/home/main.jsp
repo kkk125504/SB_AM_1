@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>MAIN</title>
+<link rel="stylesheet" href="/resource/common.css" />
+<script src="/resource/common.js" defer="defer"></script>
 </head>
 <body>
 	<h1>MAIN</h1>
