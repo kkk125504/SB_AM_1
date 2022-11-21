@@ -41,7 +41,7 @@ public class UsrMemberController {
 			return ResultData.from("F-6", "이메일을 입력 해주세요.");
 		}
 
-		ResultData joinRd = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
+		ResultData<Integer> joinRd = memberService.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
 
 		if (joinRd.isFail()) {
 			return joinRd;
