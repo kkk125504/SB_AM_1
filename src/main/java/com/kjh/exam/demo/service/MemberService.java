@@ -40,7 +40,7 @@ public class MemberService {
 		return member;
 	}
 
-	private Member getMemberByLoginId(String loginId) {
+	public Member getMemberByLoginId(String loginId) {
 		Member member = memberRepository.getMemberByLoginId(loginId);
 		return member;
 	}
