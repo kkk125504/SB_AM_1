@@ -8,14 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kjh.exam.demo.service.ArticleService;
+import com.kjh.exam.demo.util.Ut;
 import com.kjh.exam.demo.vo.Article;
+import com.kjh.exam.demo.vo.ResultData;
 
 @Controller
 public class UsrArticleController {
-	
+
 	@Autowired
 	ArticleService articleService;
-	
+
 	// 액션 메소드
 	@RequestMapping("usr/article/doAdd")
 	@ResponseBody
@@ -27,13 +29,13 @@ public class UsrArticleController {
 
 	@RequestMapping("usr/article/getArticle")
 	@ResponseBody
-	public Object getArticle(int id) {
+	public ResultData getArticle(int id) {
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
-			return id + "번 게시물은 존재하지 않습니다.";
+			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
 		}
-		return article;
+		return ResultData.from("S-1", Ut.f("%d번 게시물입니다.", id), article);
 	}
 
 	@RequestMapping("usr/article/getArticles")
