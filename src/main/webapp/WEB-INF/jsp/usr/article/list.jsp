@@ -8,6 +8,15 @@
 <title>게시물 리스트</title>
 </head>
 <body>
+	<h1>LIST</h1>
+	<hr />
+	<header>
+		<a href="#">LOGO</a>
+			<ul>
+				<li><a href="/">HOME</a></li>
+				<li><a href="../article/list">LIST</a></li>
+			</ul>	
+	</header>
 	<table border="2">
 		<thead>
 			<tr>
