@@ -12,3 +12,7 @@ spring:
       suffix: .jsp
 mybatis:
   type-aliases-package: com.kjh.exam.demo.vo
+custom:
+  logging:
+    dir: log
+    level: debug  
