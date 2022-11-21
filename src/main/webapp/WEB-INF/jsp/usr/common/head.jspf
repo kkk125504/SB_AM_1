@@ -20,13 +20,32 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
 </head>
 <body>
-	<h1>${pageTitle}&nbsp;PAGE</h1>
-	<hr />
-		<header>
-				<a href="#">LOGO</a>
-			<ul>
-				<li><a href="/">HOME</a></li>
-				<li><a href="../article/list">LIST</a></li>
+	<header>
+		<div class="container h-20 flex mx-auto text-4xl">
+			<a href="#" class="flex items-center px-3">
+				<span>LOGO</span>
+			</a>
+			<div class="flex-grow"></div>
+			<ul class="flex">
+				<li class="hover:underline">
+					<a class="flex h-full items-center px-3" href="/" ><span>HOME</span></a>
+				</li>
+				<li class="hover:underline">
+					<a class="flex h-full items-center px-3" href="../article/list" >
+						<span>LIST</span>
+					</a>
+				</li>
+				<li class="hover:underline">
+					<a class="flex h-full items-center px-3" href="../member/login">
+						<span>LOGIN</span>
+					</a>
+				</li>
 			</ul>	
-		</header>
-		<main>
+		</div>
+	</header>
+	<section class= "my-3 text-2xl">
+			<div class="container mx-auto px-3">
+				<h1>${pageTitle}&nbsp;PAGE</h1>
+			</div>			
+	</section>
+	<main>
