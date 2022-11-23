@@ -26,11 +26,7 @@ public class UsrArticleController {
 	@RequestMapping("usr/article/doAdd")
 	@ResponseBody
 	public ResultData<Article> doAdd(HttpServletRequest req, String title, String body) {
-		Rq rq = (Rq)req.getAttribute("rq");
-
-		if (rq.isLogined() == false) {
-			return ResultData.from("F-A", "로그인 후 이용가능 합니다.");
-		}
+		Rq rq = (Rq) req.getAttribute("rq");
 
 		if (Ut.empty(title)) {
 			return ResultData.from("F-1", Ut.f("제목을 입력해 주세요."));
@@ -48,7 +44,7 @@ public class UsrArticleController {
 
 	@RequestMapping("usr/article/detail")
 	public String showDetail(HttpServletRequest req, Model model, int id) {
-		Rq rq = (Rq)req.getAttribute("rq");
+		Rq rq = (Rq) req.getAttribute("rq");
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		model.addAttribute("article", article);
@@ -57,7 +53,7 @@ public class UsrArticleController {
 
 	@RequestMapping("usr/article/list")
 	public String showList(HttpServletRequest req, Model model) {
-		Rq rq = (Rq)req.getAttribute("rq");
+		Rq rq = (Rq) req.getAttribute("rq");
 
 		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId());
 
@@ -68,11 +64,8 @@ public class UsrArticleController {
 	@RequestMapping("usr/article/doDelete")
 	@ResponseBody
 	public String doDelete(HttpServletRequest req, int id) {
-		Rq rq = (Rq)req.getAttribute("rq");
-		
-		if (rq.isLogined() == false) {
-			return Ut.jsHistoryBack("로그인 후 이용가능 합니다.");
-		}
+		Rq rq = (Rq) req.getAttribute("rq");
+
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
 		if (article == null) {
@@ -90,11 +83,7 @@ public class UsrArticleController {
 	@RequestMapping("usr/article/doModify")
 	@ResponseBody
 	public ResultData<Article> doModify(HttpServletRequest req, int id, String title, String body) {
-		Rq rq = (Rq)req.getAttribute("rq");
-		
-		if (rq.isLogined() == false) {
-			return ResultData.from("F-A", "로그인 후 이용가능 합니다.");
-		}
+		Rq rq = (Rq) req.getAttribute("rq");
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 

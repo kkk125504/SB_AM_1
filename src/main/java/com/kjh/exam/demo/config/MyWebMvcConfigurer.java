@@ -10,7 +10,7 @@ import com.kjh.exam.demo.interceptor.NeedLoginInterceptor;
 
 @Configuration
 public class MyWebMvcConfigurer implements WebMvcConfigurer {
-	
+
 	@Autowired
 	BeforeActionInterceptor beforeActionInterceptor;
 	@Autowired
@@ -20,7 +20,7 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(beforeActionInterceptor).addPathPatterns("/**").excludePathPatterns("/resource/**")
 				.excludePathPatterns("/error");
-		
+
 		registry.addInterceptor(needLoginInterceptor).addPathPatterns("/usr/article/write")
 				.addPathPatterns("/usr/article/doAdd").addPathPatterns("/usr/article/modify")
 				.addPathPatterns("/usr/article/doModify").addPathPatterns("/usr/article/doDelete");

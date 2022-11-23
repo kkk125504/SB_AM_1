@@ -1,5 +1,7 @@
 package com.kjh.exam.demo.vo;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,5 +24,27 @@ public class Rq {
 			this.isLogined = true;
 			this.loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
 		}
+	}
+
+	public void printHistoryBackJs(String msg) {
+		resp.setContentType("text/html; charset=UTF-8");
+		println("<script>");
+		if (msg.length() != 0) {
+			print("alert('" + msg + "');");
+		}
+		println("history.back();");
+		println("</script>");
+	}
+
+	public void print(String msg) {
+		try {
+			resp.getWriter().append(msg);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void println(String str) {
+		print(str + "\n");
 	}
 }
