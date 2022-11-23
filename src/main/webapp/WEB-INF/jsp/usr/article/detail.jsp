@@ -27,7 +27,7 @@
 						<td>내용</td><td>${article.body }</td>						
 					</tr>
 					<tr>
-						<td>작성자</td><td>${article.memberId }</td>						
+						<td>작성자</td><td>${article.extra__writer }</td>						
 					</tr>
 				</tbody>								
 			</table>
