@@ -1,5 +1,6 @@
 package com.kjh.exam.demo.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.kjh.exam.demo.service.MemberService;
 import com.kjh.exam.demo.util.Ut;
 import com.kjh.exam.demo.vo.Member;
 import com.kjh.exam.demo.vo.ResultData;
+import com.kjh.exam.demo.vo.Rq;
 
 @Controller
 public class UsrMemberController {
@@ -61,14 +63,10 @@ public class UsrMemberController {
 
 	@RequestMapping("usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(HttpSession httpSession, String loginId, String loginPw) {
-		boolean isLogined = false;
+	public String doLogin(HttpServletRequest req, String loginId, String loginPw) {
+		Rq rq = (Rq) req.getAttribute("rq");
 
-		if (httpSession.getAttribute("loginedMemberId") != null) {
-			isLogined = true;
-		}
-
-		if (isLogined) {
+		if (rq.isLogined()) {
 			return Ut.jsHistoryBack("이미 로그인 되었습니다.");
 		}
 
@@ -88,28 +86,21 @@ public class UsrMemberController {
 		if (member.getLoginPw().equals(loginPw) == false) {
 			return Ut.jsHistoryBack("비밀번호가 일치하지 않습니다.");
 		}
-		httpSession.setAttribute("loginedMemberId", member.getId());
-		httpSession.setAttribute("loginedMemberLoginId", member.getLoginId());
+		rq.login(member);
 
 		return Ut.jsReplace(Ut.f("%s님 환영합니다.", member.getName()), "/");
 	}
 
 	@RequestMapping("usr/member/doLogout")
 	@ResponseBody
-	public ResultData doLogout(HttpSession httpSession) {
-		boolean isLogined = false;
+	public String doLogout(HttpServletRequest req) {
+		Rq rq = (Rq) req.getAttribute("rq");
 
-		if (httpSession.getAttribute("loginedMemberId") != null) {
-			isLogined = true;
-		}
-
-		if (isLogined == false) {
-			return ResultData.from("F-1", "로그아웃 상태 입니다.");
-		}
-
-		httpSession.removeAttribute("loginedMemberId");
-		httpSession.removeAttribute("loginedMemberLoginId");
-
-		return ResultData.from("S-1", "로그아웃 했습니다.");
+		if (rq.isLogined() == false) {
+			return Ut.jsHistoryBack("로그아웃 상태 입니다.");
+		}		
+		rq.logout();
+		
+		return Ut.jsReplace("로그아웃 했습니다.", "/");
 	}
 }
