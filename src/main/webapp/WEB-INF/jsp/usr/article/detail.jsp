@@ -33,8 +33,12 @@
 			</table>
 			<div class= "btns">
 				<button class ="btn-text-link" type="button" onclick="history.back()">뒤로가기</button>
-				<a class ="btn-text-link" href="modify?id=${article.id }">수정</a>				
-				<a class ="btn-text-link" onclick="if(confirm('삭제하시겠습니까?') == false) return false;" href="doDelete?id=${article.id }">삭제</a>
+				<c:if test ="${article.extra__actorCanModify}">
+					<a class ="btn-text-link" href="modify?id=${article.id }">수정</a>				
+				</c:if>
+				<c:if test ="${article.extra__actorCanDelete}">
+					<a class ="btn-text-link" onclick="if(confirm('삭제하시겠습니까?') == false) return false;" href="doDelete?id=${article.id }">삭제</a>
+				</c:if>				
 			</div>
 		</div>
 	</div>

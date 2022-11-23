@@ -11,7 +11,7 @@
 		`body`= #{body}
 	</insert>
 
-	<select id="getArticle" resultType="Article">
+	<select id="getForPrintArticle" resultType="Article">
 		SELECT A.*, M.nickname AS extra__writer 
 		FROM article AS A
 		INNER JOIN `member` AS M
@@ -19,7 +19,7 @@
 		WHERE A.id = #{id}
 	</select>
 
-	<select id="getArticles" resultType="Article">
+	<select id="getForPrintArticles" resultType="Article">
 		SELECT A.*, M.nickname AS extra__writer 
 		FROM article AS A
 		INNER JOIN `member` AS M
