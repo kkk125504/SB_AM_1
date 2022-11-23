@@ -52,3 +52,12 @@ html > body {
 	color: red;
 	text-decoration: underline;
 }
+
+.table-box-type-1 > .min {
+	width:50%;
+}
+.btns-box-type-1{
+	width:50%;
+	margin-left : auto;
+	margin-right : auto;
+}
