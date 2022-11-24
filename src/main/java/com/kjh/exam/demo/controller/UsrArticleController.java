@@ -64,8 +64,11 @@ public class UsrArticleController {
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		Board board = boardService.getBoardById(boardId);
+		if (board == null) {
+			return rq.jsHistoryBackOnView("존재하지 않는 게시판 입니다.");
+		}
 
-		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId());
+		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(), boardId);
 
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);

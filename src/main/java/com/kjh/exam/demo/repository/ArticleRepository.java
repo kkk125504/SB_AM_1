@@ -8,17 +8,17 @@ import com.kjh.exam.demo.vo.Article;
 
 @Mapper
 public interface ArticleRepository {
-	
+
 	public Article getForPrintArticle(int id);
-	
-	public List<Article> getForPrintArticles(); 
+
+	public List<Article> getForPrintArticles(int boardId);
 
 	public int writeArticle(int actorId, String title, String body);
-	
-	public void deleteArticle(int id); 
-	
+
+	public void deleteArticle(int id);
+
 	public void modifyArticle(int id, String title, String body);
 
-	public int getLastInsertId(); 
+	public int getLastInsertId();
 
 }
