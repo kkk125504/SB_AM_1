@@ -63,3 +63,8 @@ html > body {
 	margin-left : auto;
 	margin-right : auto;
 }
+
+/* 커스텀 */
+body {
+	min-width: 800px;
+}

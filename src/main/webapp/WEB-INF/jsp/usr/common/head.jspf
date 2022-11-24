@@ -34,6 +34,11 @@
 					<a class="flex h-full items-center px-3" href="/" ><span>HOME</span></a>
 				</li>
 				<li class="hover:underline">
+					<a class="flex h-full items-center px-3" href="../article/write" >
+						<span>WRITE</span>
+					</a>
+				</li>
+				<li class="hover:underline">
 					<a class="flex h-full items-center px-3" href="../article/list" >
 						<span>LIST</span>
 					</a>
