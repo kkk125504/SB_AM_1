@@ -39,8 +39,13 @@
 					</a>
 				</li>
 				<li class="hover:underline">
-					<a class="flex h-full items-center px-3" href="../article/list" >
-						<span>LIST</span>
+					<a class="flex h-full items-center px-3" href="../article/list?boardId=1" >
+						<span>NOTICE</span>
+					</a>
+				</li>
+				<li class="hover:underline">
+					<a class="flex h-full items-center px-3" href="../article/list?boardId=2" >
+						<span>FREE</span>
 					</a>
 				</li>
 				<c:if test="${!rq.isLogined() }">
