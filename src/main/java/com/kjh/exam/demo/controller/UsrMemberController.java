@@ -1,8 +1,5 @@
 package com.kjh.exam.demo.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +16,8 @@ public class UsrMemberController {
 
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private Rq rq;
 
 	// 액션 메소드
 	@RequestMapping("usr/member/doJoin")
@@ -63,8 +62,7 @@ public class UsrMemberController {
 
 	@RequestMapping("usr/member/doLogin")
 	@ResponseBody
-	public String doLogin(HttpServletRequest req, String loginId, String loginPw) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String doLogin(String loginId, String loginPw) {
 
 		if (rq.isLogined()) {
 			return Ut.jsHistoryBack("이미 로그인 되었습니다.");
@@ -93,8 +91,7 @@ public class UsrMemberController {
 
 	@RequestMapping("usr/member/doLogout")
 	@ResponseBody
-	public String doLogout(HttpServletRequest req) {
-		Rq rq = (Rq) req.getAttribute("rq");
+	public String doLogout() {
 
 		if (rq.isLogined() == false) {
 			return Ut.jsHistoryBack("로그아웃 상태 입니다.");
