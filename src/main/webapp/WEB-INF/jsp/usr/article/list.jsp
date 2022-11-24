@@ -7,7 +7,7 @@
 	<div class="container mx-auto px-3">
 		<div class="table-box-type-1">
 			<table border="2">
-				<thead>
+				<thead class="bg-gray-200">
 					<tr>
 						<th>번호</th>
 						<th>날짜</th>
@@ -27,8 +27,8 @@
 				</tbody>
 			</table>
 		</div>
-		<div class= "btns">
-			<button type="button" onclick="history.back()">뒤로가기</button>
+		<div class= "btns flex justify-end mx-4">
+			<button class="btn-text-link btn btn-active btn-ghost" type="button" onclick="history.back()">뒤로가기</button>
 		</div>
 	</div>
 </section>	

@@ -12,32 +12,38 @@
 				</colgroup>	
 				<tbody>		
 					<tr>
-						<td>번호</td><td>${article.id }</td>						
+						<td class="bg-gray-200">번호</td>
+						<td>${article.id }</td>						
 					</tr>
 					<tr>
-						<td>작성날짜</td><td>${article.regDate }</td>						
+						<td class="bg-gray-200">작성날짜</td>
+						<td>${article.regDate }</td>						
 					</tr>
 					<tr>
-						<td>수정날짜</td><td>${article.updateDate }</td>						
+						<td class="bg-gray-200">수정날짜</td>
+						<td>${article.updateDate }</td>						
 					</tr>
 					<tr>
-						<td>제목</td><td>${article.title }</td>						
+						<td class="bg-gray-200">제목</td>
+						<td>${article.title }</td>						
 					</tr>
 					<tr>
-						<td>내용</td><td>${article.body }</td>						
+						<td class="bg-gray-200">내용</td>
+						<td>${article.body }</td>						
 					</tr>
 					<tr>
-						<td>작성자</td><td>${article.extra__writer }</td>						
+						<td class="bg-gray-200">작성자</td>
+						<td>${article.extra__writer }</td>						
 					</tr>
 				</tbody>								
 			</table>
-			<div class= "btns">
-				<button class ="btn-text-link" type="button" onclick="history.back()">뒤로가기</button>
+			<div class= "btns flex justify-end">
+				<button class ="btn-text-link btn btn-active btn-ghost" type="button" onclick="history.back()">뒤로가기</button>
 				<c:if test ="${article.extra__actorCanModify}">
-					<a class ="btn-text-link" href="modify?id=${article.id }">수정</a>				
+					<a class ="btn-text-link btn btn-active btn-ghost mx-4" href="modify?id=${article.id }">수정</a>				
 				</c:if>
 				<c:if test ="${article.extra__actorCanDelete}">
-					<a class ="btn-text-link" onclick="if(confirm('삭제하시겠습니까?') == false) return false;" href="doDelete?id=${article.id }">삭제</a>
+					<a class ="btn-text-link btn btn-active btn-ghost" onclick="if(confirm('삭제하시겠습니까?') == false) return false;" href="doDelete?id=${article.id }">삭제</a>
 				</c:if>				
 			</div>
 		</div>

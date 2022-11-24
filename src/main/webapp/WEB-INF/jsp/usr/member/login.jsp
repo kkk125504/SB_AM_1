@@ -22,8 +22,8 @@
 						</tbody>
 				</table>
 				<div class="btns flex justify-end btns-box-type-1">
-					<button type="submit" >로그인</button>
-					<button type="button" onclick="history.back()">뒤로가기</button>
+					<button class="btn btn-active btn-ghost" type="submit" >로그인</button>
+					<button class="btn btn-active btn-ghost mx-4" type="button" onclick="history.back()">뒤로가기</button>
 				</div>	
 			</form>			
 		</div>

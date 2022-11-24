@@ -24,18 +24,18 @@
 						</tr>
 						<tr>
 							<td>제목</td>
-							<td><input type="text" class="w-96" name="title" value="${article.title }" placeholder="제목을 입력해주세요." /></td>						
+							<td><input type="text" class="w-4/6 input input-bordered input-lg" name="title" value="${article.title }" placeholder="제목을 입력해주세요." /></td>						
 						</tr>
 						<tr>
 							<td>내용</td>
-							<td><textarea name="body" placeholder="제목을 입력해주세요."  cols="80" rows="10">${article.body }</textarea></td>						
+							<td><textarea class="textarea textarea-bordered h-52 w-11/12" placeholder="제목을 입력해주세요."  name="body" placeholder="제목을 입력해주세요."  cols="80" rows="10">${article.body }</textarea></td>						
 						</tr>						
 					</tbody>								
 				</table>
 
 				<div class= "btns flex justify-end">
-					<button class ="btn-text-link mx-4" type="submit">수정하기</button>					
-					<button class ="btn-text-link" type="button" onclick="history.back()">뒤로가기</button>
+					<button class ="btn-text-link btn btn-active btn-ghost mx-4" type="submit">수정하기</button>					
+					<button class ="btn-text-link btn btn-active btn-ghost" type="button" onclick="history.back()">뒤로가기</button>
 				</div>
 			</form>
 		</div>
