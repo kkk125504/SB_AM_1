@@ -20,7 +20,7 @@
 						</tr>
 						<tr>
 							<td>작성자</td>
-							<td></td>						
+							<td>${rq.loginedMember.nickname }</td>						
 						</tr>						
 					</tbody>								
 				</table>

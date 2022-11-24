@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kjh.exam.demo.service.MemberService;
 import com.kjh.exam.demo.util.Ut;
 
 import lombok.Getter;
@@ -15,18 +16,28 @@ public class Rq {
 	private boolean isLogined;
 	@Getter
 	private int loginedMemberId;
+	@Getter
+	private Member loginedMember;
+
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
 	private HttpSession httpSession;
 
-	public Rq(HttpServletRequest req, HttpServletResponse resp) {
+	public Rq(HttpServletRequest req, HttpServletResponse resp, MemberService memberService) {
 		this.req = req;
 		this.resp = resp;
 		this.httpSession = req.getSession();
+		boolean isLogined = false;
+		int loginedMemberId = -1;
+		Member loginedMember = null;
 		if (httpSession.getAttribute("loginedMemberId") != null) {
-			this.isLogined = true;
-			this.loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
+			isLogined = true;
+			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
+			loginedMember = memberService.getMemberById(loginedMemberId);
 		}
+		this.isLogined = isLogined;
+		this.loginedMemberId = loginedMemberId;
+		this.loginedMember = loginedMember;
 	}
 
 	public void printHistoryBackJs(String msg) {
