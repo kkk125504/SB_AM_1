@@ -27,26 +27,25 @@ public class UsrArticleController {
 	public String showWrite() {
 		return "usr/article/write";
 	}
-	
+
 	@RequestMapping("usr/article/doWrite")
 	@ResponseBody
-	public ResultData<Article> doWrite(HttpServletRequest req, String title, String body) {
+	public String doWrite(HttpServletRequest req, String title, String body) {
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		if (Ut.empty(title)) {
-			return ResultData.from("F-1", Ut.f("제목을 입력해 주세요."));
+			return rq.jsHistoryBack("제목을 입력해 주세요.");
 		}
 		if (Ut.empty(body)) {
-			return ResultData.from("F-2", Ut.f("내용을 입력해 주세요."));
+			return rq.jsHistoryBack("내용을 입력해 주세요.");
 		}
 		ResultData<Integer> writeRd = articleService.writeArticle(rq.getLoginedMemberId(), title, body);
 
 		int id = (int) writeRd.getData1();
-		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
-		return ResultData.newData(writeRd, "article", article);
+		return rq.jsReplace(Ut.f("%d번 게시물이 작성 되었습니다.", id), Ut.f("../article/detail?id=%d", id));
 	}
-		
+
 	@RequestMapping("usr/article/detail")
 	public String showDetail(HttpServletRequest req, Model model, int id) {
 		Rq rq = (Rq) req.getAttribute("rq");
