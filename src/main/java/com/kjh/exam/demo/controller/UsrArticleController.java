@@ -69,7 +69,7 @@ public class UsrArticleController {
 		}
 
 		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(), boardId);
-
+		
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);
 		return "usr/article/list";
