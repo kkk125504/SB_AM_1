@@ -28,6 +28,4 @@ public interface ArticleRepository {
 
 	public int getHitCount(int id);
 
-	public int getSumReactionPointByMemberId(int actorId, int id);
-
 }

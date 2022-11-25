@@ -106,10 +106,4 @@ public class ArticleService {
 		return articleRepository.getHitCount(id);
 	}
 
-	public boolean actorCanMakeReaction(int actorId, int id) {
-		if (actorId == -1) {
-			return false;
-		}
-		return articleRepository.getSumReactionPointByMemberId(actorId, id) == 0;
-	}
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kjh.exam.demo.service.ArticleService;
 import com.kjh.exam.demo.service.BoardService;
+import com.kjh.exam.demo.service.ReactionPointService;
 import com.kjh.exam.demo.util.Ut;
 import com.kjh.exam.demo.vo.Article;
 import com.kjh.exam.demo.vo.Board;
@@ -24,6 +25,8 @@ public class UsrArticleController {
 	private ArticleService articleService;
 	@Autowired
 	private BoardService boardService;
+	@Autowired
+	private ReactionPointService reactionPointService;
 	@Autowired
 	private Rq rq;
 
@@ -52,7 +55,8 @@ public class UsrArticleController {
 
 	@RequestMapping("usr/article/detail")
 	public String showDetail(Model model, int id) {
-		boolean actorCanMakeReaction = articleService.actorCanMakeReaction(rq.getLoginedMemberId(), id);
+		boolean actorCanMakeReaction = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article",
+				id);
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
@@ -60,7 +64,7 @@ public class UsrArticleController {
 		model.addAttribute("article", article);
 		return "usr/article/detail";
 	}
-	
+
 	@RequestMapping("usr/article/list")
 	public String showList(Model model, @RequestParam(defaultValue = "1") int boardId,
 			@RequestParam(defaultValue = "title,body") String searchKeywordType,
@@ -138,17 +142,17 @@ public class UsrArticleController {
 		articleService.modifyArticle(id, title, body);
 		return rq.jsReplace(Ut.f("%d번 게시물 수정", id), Ut.f("../article/detail?id=%d", id));
 	}
-	
+
 	@RequestMapping("/usr/article/doIncreaseHitCountRd")
 	@ResponseBody
-	public ResultData<Integer> doIncreaseHitCount(int id){
+	public ResultData<Integer> doIncreaseHitCount(int id) {
 		ResultData<Integer> increaseHitCountRd = articleService.increaseHitCount(id);
-		if(increaseHitCountRd.isFail()) {
+		if (increaseHitCountRd.isFail()) {
 			return increaseHitCountRd;
 		}
 		int hitCount = articleService.getHitCount(id);
 		ResultData<Integer> rd = ResultData.newData(increaseHitCountRd, "hitCount", hitCount);
-		rd.setData2("id",id);
+		rd.setData2("id", id);
 		return rd;
 	}
 }
