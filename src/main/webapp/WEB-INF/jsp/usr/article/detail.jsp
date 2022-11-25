@@ -70,8 +70,10 @@
 					<tr>
 						<td class="bg-gray-200">추천</td>
 						<td>				
-							<button class="btn btn-outline btn-sm">좋아요 👍</button>
-							<button class="btn btn-outline btn-sm">싫어요 👎</button>
+							<c:if test="${actorCanMakeReaction}">
+								<button class="btn btn-outline btn-sm">좋아요 👍</button>
+								<button class="btn btn-outline btn-sm">싫어요 👎</button>
+							</c:if>
 						</td>
 					</tr>
 				</tbody>								

@@ -95,14 +95,21 @@ public class ArticleService {
 
 	public ResultData<Integer> increaseHitCount(int id) {
 		int affectedRowsCount = articleRepository.increaseHitCount(id);
-		if(affectedRowsCount == 0) {
-			return ResultData.from("F-1", "존재하지 않는 게시물입니다.","affectedRowsCount",affectedRowsCount);
+		if (affectedRowsCount == 0) {
+			return ResultData.from("F-1", "존재하지 않는 게시물입니다.", "affectedRowsCount", affectedRowsCount);
 		}
-		return ResultData.from("S-1", "조회수 증가","affectedRowsCount",affectedRowsCount);
+		return ResultData.from("S-1", "조회수 증가", "affectedRowsCount", affectedRowsCount);
 	}
 
 	public int getHitCount(int id) {
-		
+
 		return articleRepository.getHitCount(id);
+	}
+
+	public boolean actorCanMakeReaction(int actorId, int id) {
+		if (actorId == -1) {
+			return false;
+		}
+		return articleRepository.getSumReactionPointByMemberId(actorId, id) == 0;
 	}
 }

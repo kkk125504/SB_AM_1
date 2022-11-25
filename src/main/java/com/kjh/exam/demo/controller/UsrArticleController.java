@@ -52,8 +52,11 @@ public class UsrArticleController {
 
 	@RequestMapping("usr/article/detail")
 	public String showDetail(Model model, int id) {
+		boolean actorCanMakeReaction = articleService.actorCanMakeReaction(rq.getLoginedMemberId(), id);
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+
+		model.addAttribute("actorCanMakeReaction", actorCanMakeReaction);
 		model.addAttribute("article", article);
 		return "usr/article/detail";
 	}
