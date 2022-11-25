@@ -73,6 +73,22 @@
 	<select id="getArticlesCount" resultType ="int">
 		SELECT COUNT(*) FROM article
 		WHERE boardId = #{boardId}
+		<if test="searchKeyWord != ''">
+			<choose>
+				<when test="searchKeywordType == title">
+				AND A.title LIKE CONCAT('%',#{searchKeyword},'%')
+				</when>
+		    	<when test="searchKeywordType == body">
+				AND A.`body` LIKE CONCAT('%',#{searchKeyword},'%')
+				</when>
+				<otherwise>
+		    	AND (
+		    		title LIKE CONCAT('%',#{searchKeyword},'%') OR
+		    		body LIKE CONCAT('%',#{searchKeyword},'%')
+		    		)
+		    	</otherwise>  	
+			</choose>
+		</if>
 	</select>
 
 </mapper>
