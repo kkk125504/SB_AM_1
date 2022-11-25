@@ -24,6 +24,69 @@
 		}, 'json');
 	}
 	
+	function goodReactionPoint() {
+		if(${rq.isLogined()==false}){
+			alert('로그인 후 이용 가능합니다.');
+			return;
+		}						
+		$.get('../reactionPoint/doGoodReaction', {
+			relId : params.id,
+			relTypeCode : 'article',
+			ajaxMode : 'Y'
+		}, function(data) {
+			if(data.fail){
+				alert(data.msg);
+				return;					
+			}
+			if(data.resultCode=='S-2'){
+				$('.good').addClass('btn-outline');
+			}
+			
+			if(data.resultCode=='S-1'){
+				$('.good').removeClass('btn-outline');
+			}
+			
+			$('.good').empty().html('좋아요 👍 : '+data.data1);	
+			
+		}, 'json');		
+	}
+	
+	function badReactionPoint() {
+		if(${rq.isLogined()==false}){
+			alert('로그인 후 이용 가능합니다.');
+			return;
+		}						
+		$.get('../reactionPoint/doBadReaction', {
+			relId : params.id,
+			relTypeCode : 'article',
+			ajaxMode : 'Y'
+		}, function(data) {
+			if(data.fail){
+				alert(data.msg);
+				return;					
+			}
+			if(data.resultCode=='S-2'){
+				$('.bad').addClass('btn-outline');
+			}
+			
+			if(data.resultCode=='S-1'){
+				$('.bad').removeClass('btn-outline');
+			}
+			
+			$('.bad').empty().html('싫어요 👎 : '+data.data1);	
+			
+		}, 'json');		
+	}
+		
+	function selectedReactionPoint() {
+		if(${isSelectedGoodReactionPoint}){ 
+			$('.good').removeClass('btn-outline');
+		}
+		if(${isSelectedBadReactionPoint}){ 
+			$('.bad').removeClass('btn-outline');
+		}
+	}
+	
 	$(function() {
 		// 실전코드
 		//ArticleDetail__increaseHitCount();
@@ -70,10 +133,8 @@
 					<tr>
 						<td class="bg-gray-200">추천</td>
 						<td>				
-							<c:if test="${actorCanMakeReaction}">
-								<button class="btn btn-outline btn-sm">좋아요 👍</button>
-								<button class="btn btn-outline btn-sm">싫어요 👎</button>
-							</c:if>
+							<button class="btn btn-outline btn-xs good" onclick="goodReactionPoint()">좋아요 👍 : ${article.goodReactionPoint}</button>
+							<button class="btn btn-outline btn-xs bad" onclick="badReactionPoint()">싫어요 👎 : ${article.badReactionPoint}</button>
 						</td>
 					</tr>
 				</tbody>								

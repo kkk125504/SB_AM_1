@@ -103,5 +103,47 @@
 		SELECT hitCount FROM article
 		WHERE id = #{id}
 	</select>
+	
+	<update id="increaseGoodReactionPoint">
+		UPDATE article		
+		<set>
+		goodReactionPoint = goodReactionPoint +1
+		</set>		
+		WHERE id = #{relId}
+	</update>	
+	
+	<update id="increaseBadReactionPoint">
+		UPDATE article		
+		<set>
+		badReactionPoint = badReactionPoint +1
+		</set>		
+		WHERE id = #{relId}
+	</update>
+	
+	<update id="decreaseGoodReactionPoint">
+		UPDATE article		
+		<set>
+		goodReactionPoint = goodReactionPoint -1
+		</set>		
+		WHERE id = #{relId}
+	</update>
+
+	<update id="decreaseBadReactionPoint">
+		UPDATE article		
+		<set>
+		badReactionPoint = badReactionPoint -1
+		</set>		
+		WHERE id = #{relId}
+	</update>
+	
+	<select id="getGoodReactionPoint" resultType="int">
+		SELECT goodReactionPoint FROM article
+		WHERE id = #{relId}
+	</select>	
+
+	<select id="getBadReactionPoint" resultType="int">
+		SELECT badReactionPoint FROM article
+		WHERE id = #{relId}
+	</select>
 			
 </mapper>
