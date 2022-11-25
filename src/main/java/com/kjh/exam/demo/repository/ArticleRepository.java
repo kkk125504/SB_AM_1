@@ -11,7 +11,8 @@ public interface ArticleRepository {
 
 	public Article getForPrintArticle(int id);
 
-	public List<Article> getForPrintArticles(int boardId, int limitStart, int limitTake);
+	public List<Article> getForPrintArticles(int boardId, int limitStart, int limitTake, String searchKeywordType,
+			String searchKeyword);
 
 	public int writeArticle(int actorId, String title, String body, int boardId);
 
@@ -21,6 +22,6 @@ public interface ArticleRepository {
 
 	public int getLastInsertId();
 
-	public int getArticlesCount(int boardId);
+	public int getArticlesCount(int boardId, String searchKeywordType, String searchKeyword);
 
 }
