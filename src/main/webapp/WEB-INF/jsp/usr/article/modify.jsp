@@ -32,7 +32,7 @@
 						</tr>
 						<tr>
 							<td>추천 수</td>
-							<td><span class="badge">${article.extra__sumReactionPoint }</span></td>						
+							<td><span class="badge">${article.goodReactionPoint }</span></td>						
 						</tr>							
 					</tbody>								
 				</table>
