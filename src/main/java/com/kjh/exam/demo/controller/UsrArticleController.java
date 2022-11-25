@@ -144,6 +144,8 @@ public class UsrArticleController {
 			return increaseHitCountRd;
 		}
 		int hitCount = articleService.getHitCount(id);
-		return ResultData.newData(increaseHitCountRd, "hitCount", hitCount);
+		ResultData<Integer> rd = ResultData.newData(increaseHitCountRd, "hitCount", hitCount);
+		rd.setData2("id",id);
+		return rd;
 	}
 }
