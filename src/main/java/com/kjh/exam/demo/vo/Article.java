@@ -20,6 +20,9 @@ public class Article {
 	private String extra__writer;
 	private boolean extra__actorCanDelete;
 	private boolean extra__actorCanModify;
+	private boolean extra__sumReactionPoint;
+	private boolean extra__goodReactionPoint;
+	private boolean extra__badReactionPoint;
 	
 	public String getForPrintType1RegDate() {
 		return regDate.substring(2,16).replace(" ","</br>");

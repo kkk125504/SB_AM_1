@@ -13,11 +13,20 @@
 	</insert>
 
 	<select id="getForPrintArticle" resultType="Article">
+		SELECT A.*, 
+		IFNULL(SUM(RP.point),0) AS extra__sumReactionPoint,
+		IFNULL(SUM(IF(Rp.point &gt; 0,Rp.point,0)),0) AS extra__goodReactionPoint,
+		IFNULL(SUM(IF(Rp.point &lt; 0,Rp.point,0)),0) AS extra__badReactionPoint
+		FROM (
 		SELECT A.*, M.nickname AS extra__writer 
 		FROM article AS A
 		INNER JOIN `member` AS M
 		ON A.memberId = M.id
 		WHERE A.id = #{id}
+		) AS A
+		INNER JOIN reactionPoint AS RP
+		ON A.id = RP.relId
+		GROUP BY A.id
 	</select>
 
 	<select id="getForPrintArticles" resultType="Article">
