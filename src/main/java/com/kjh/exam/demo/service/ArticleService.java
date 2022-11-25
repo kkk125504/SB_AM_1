@@ -102,7 +102,7 @@ public class ArticleService {
 	}
 
 	public int getHitCount(int id) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return articleRepository.getHitCount(id);
 	}
 }

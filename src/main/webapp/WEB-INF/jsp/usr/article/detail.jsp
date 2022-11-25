@@ -2,7 +2,28 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="ARTICLE" />
 <%@ include file="../common/head.jspf" %>
+<script>
+		const params = {};
+		params.id = parseInt('${param.id}');
+</script>
+
+<script>
+	function ArticleDetail__increaseHitCount() {
+		$.get('../article/doIncreaseHitCountRd', {
+			id : params.id,
+			ajaxMode : 'Y'
+		}, function(data) {
+			$('.article-detail__hit-count').empty().html(data.data1);
+		}, 'json');
+	}
 	
+	$(function() {
+		// 실전코드
+		//ArticleDetail__increaseHitCount();
+		// 연습코드
+		setTimeout(ArticleDetail__increaseHitCount, 2000);
+	})
+</script>	
 <section class="mt-8 text-xl">
 	<div class="container mx-auto px-3">
 		<div class="table-box-type-1">
@@ -13,7 +34,7 @@
 				<tbody>		
 					<tr>
 						<td class="bg-gray-200">번호</td>
-						<td>${article.id }</td>						
+						<td><span class="badge">${article.id }</span></td>						
 					</tr>
 					<tr>
 						<td class="bg-gray-200">작성날짜</td>
@@ -36,7 +57,8 @@
 						<td>${article.extra__writer }</td>						
 					</tr>
 					<tr>
-						<td class="bg-gray-200">조회수</td><td>${article.hitCount }</td>						
+						<td class="bg-gray-200">조회수</td>
+						<td><span class="badge article-detail__hit-count">${article.hitCount }</span></td>						
 					</tr>
 				</tbody>								
 			</table>
