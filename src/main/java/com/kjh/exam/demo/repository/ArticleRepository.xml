@@ -71,7 +71,7 @@
 	</select>
 	
 	<select id="getArticlesCount" resultType ="int">
-		SELECT COUNT(*) FROM article
+		SELECT COUNT(*) FROM article AS A
 		WHERE boardId = #{boardId}
 		<if test="searchKeyword != ''">
 			<choose>
@@ -83,8 +83,8 @@
 				</when>
 				<otherwise>
 		    	AND (
-		    		title LIKE CONCAT('%',#{searchKeyword},'%') OR
-		    		body LIKE CONCAT('%',#{searchKeyword},'%')
+		    		A.title LIKE CONCAT('%',#{searchKeyword},'%') OR
+		    		A.body LIKE CONCAT('%',#{searchKeyword},'%')
 		    		)
 		    	</otherwise>  	
 			</choose>
