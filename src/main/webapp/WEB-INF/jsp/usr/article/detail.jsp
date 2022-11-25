@@ -35,6 +35,9 @@
 						<td class="bg-gray-200">작성자</td>
 						<td>${article.extra__writer }</td>						
 					</tr>
+					<tr>
+						<td class="bg-gray-200">조회수</td><td>${article.hitCount }</td>						
+					</tr>
 				</tbody>								
 			</table>
 			<div class= "btns flex justify-end">

@@ -28,12 +28,18 @@
 		<div class="table-box-type-1 mt-2">
 			<div>총 게시물 : ${articlesCount}개</div>
 			<table border="2">
+				<col width ="80" />
+				<col width ="200"/>
+				<col />
+				<col width ="200"/>
+				<col width ="200"/>
 				<thead class="bg-gray-200">
 					<tr>
 						<th>번호</th>
 						<th>날짜</th>
 						<th>제목</th>
 						<th>작성자</th>
+						<th>조회수</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -43,6 +49,7 @@
 							<td>${article.regDate.substring(0,10)}</td>
 							<td><a href="../article/detail?id=${article.id}">${article.title}</a></td>
 							<td>${article.extra__writer}</td>
+							<td>${article.hitCount}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
