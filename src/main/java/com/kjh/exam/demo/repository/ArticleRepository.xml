@@ -8,7 +8,8 @@
 		updateDate = NOW(),
 		memberId = #{actorId},
 		title = #{title},
-		`body`= #{body}
+		`body`= #{body},
+		boardId = #{boardId}
 	</insert>
 
 	<select id="getForPrintArticle" resultType="Article">

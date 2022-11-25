@@ -13,7 +13,7 @@ public interface ArticleRepository {
 
 	public List<Article> getForPrintArticles(int boardId);
 
-	public int writeArticle(int actorId, String title, String body);
+	public int writeArticle(int actorId, String title, String body, int boardId);
 
 	public void deleteArticle(int id);
 
