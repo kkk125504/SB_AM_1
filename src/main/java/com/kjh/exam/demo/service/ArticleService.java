@@ -100,4 +100,9 @@ public class ArticleService {
 		}
 		return ResultData.from("S-1", "조회수 증가","affectedRowsCount",affectedRowsCount);
 	}
+
+	public int getHitCount(int id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

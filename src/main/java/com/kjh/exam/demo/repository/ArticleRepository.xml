@@ -98,5 +98,9 @@
 		</set>		
 		WHERE id = #{id}
 	</update>
-
+	
+	<select id="getHitCount" resultType="int">
+		SELECT hitCount FROM article
+		WHERE id = #{id}
+	</select>
 </mapper>
