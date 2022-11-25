@@ -28,8 +28,11 @@
 		WHERE 1
 		<if test="boardId != 0">
 		AND A.boardId = #{boardId}
-		</if>
+		</if>		
 		ORDER BY A.id DESC
+		<if test="limitTake != -1">
+		LIMIT #{limitStart}, #{limitTake}
+		</if>
 	</select>
 
 	<delete id="deleteArticle">
@@ -49,6 +52,11 @@
 
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
+	</select>
+	
+	<select id="getArticlesCount" resultType ="int">
+		SELECT COUNT(*) FROM article
+		WHERE boardId = #{boardId}
 	</select>
 
 </mapper>

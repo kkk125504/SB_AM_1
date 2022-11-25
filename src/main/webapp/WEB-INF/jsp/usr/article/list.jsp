@@ -6,7 +6,7 @@
 <section class="mt-8 text-xl">
 	<div class="container mx-auto px-3">
 		<div class="table-box-type-1">
-			<div>총 게시물 : ${articles.size() }개</div>
+			<div>총 게시물 : ${articlesCount}개</div>
 			<table border="2">
 				<thead class="bg-gray-200">
 					<tr>

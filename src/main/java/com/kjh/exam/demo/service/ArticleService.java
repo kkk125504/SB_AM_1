@@ -34,8 +34,11 @@ public class ArticleService {
 		return article;
 	}
 
-	public List<Article> getForPrintArticles(int actorId, int boardId) {
-		List<Article> articles = articleRepository.getForPrintArticles(boardId);
+	public List<Article> getForPrintArticles(int actorId, int boardId, int page, int itemsInAPage) {
+		int limitStart = (page - 1) * itemsInAPage;
+		int limitTake = itemsInAPage;
+
+		List<Article> articles = articleRepository.getForPrintArticles(boardId, limitStart, limitTake);
 		for (Article article : articles) {
 			updateArticle(actorId, article);
 		}
@@ -81,5 +84,10 @@ public class ArticleService {
 			return ResultData.from("F-2", "해당 게시물에 대한 삭제 권한이 없습니다.");
 		}
 		return ResultData.from("S-1", "삭제 가능 합니다.");
+	}
+
+	public int getArticlesCount(int boardId) {
+		
+		return articleRepository.getArticlesCount(boardId);
 	}
 }
