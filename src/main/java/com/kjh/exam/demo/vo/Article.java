@@ -16,13 +16,12 @@ public class Article {
 	private String body;
 	private int boardId;
 	private int hitCount;
+	private int goodReactionPoint;
+	private int badReactionPoint;
 	
 	private String extra__writer;
 	private boolean extra__actorCanDelete;
 	private boolean extra__actorCanModify;
-	private int extra__sumReactionPoint;
-	private int extra__goodReactionPoint;
-	private int extra__badReactionPoint;
 	
 	public String getForPrintType1RegDate() {
 		return regDate.substring(2,16).replace(" ","</br>");
