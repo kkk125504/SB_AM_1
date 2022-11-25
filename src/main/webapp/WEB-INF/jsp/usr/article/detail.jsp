@@ -69,7 +69,10 @@
 					</tr>
 					<tr>
 						<td class="bg-gray-200">추천</td>
-						<td><span class="badge">${article.extra__sumReactionPoint}</span></td>						
+						<td>				
+							<button class="btn btn-outline btn-sm">좋아요 👍</button>
+							<button class="btn btn-outline btn-sm">싫어요 👎</button>
+						</td>
 					</tr>
 				</tbody>								
 			</table>
