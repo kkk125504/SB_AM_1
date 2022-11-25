@@ -29,12 +29,12 @@
 		<if test="boardId != 0">
 		AND A.boardId = #{boardId}
 		</if>
-		<if test="searchKeyWord != ''">
+		<if test="searchKeyword != ''">
 			<choose>
-				<when test="searchKeywordType == title">
+				<when test="searchKeywordType == 'title'">
 				AND A.title LIKE CONCAT('%',#{searchKeyword},'%')
 				</when>
-		    	<when test="searchKeywordType == body">
+		    	<when test="searchKeywordType == 'body'">
 				AND A.`body` LIKE CONCAT('%',#{searchKeyword},'%')
 				</when>
 				<otherwise>
@@ -73,12 +73,12 @@
 	<select id="getArticlesCount" resultType ="int">
 		SELECT COUNT(*) FROM article
 		WHERE boardId = #{boardId}
-		<if test="searchKeyWord != ''">
+		<if test="searchKeyword != ''">
 			<choose>
-				<when test="searchKeywordType == title">
+				<when test="searchKeywordType == 'title'">
 				AND A.title LIKE CONCAT('%',#{searchKeyword},'%')
 				</when>
-		    	<when test="searchKeywordType == body">
+		    	<when test="searchKeywordType == 'body'">
 				AND A.`body` LIKE CONCAT('%',#{searchKeyword},'%')
 				</when>
 				<otherwise>

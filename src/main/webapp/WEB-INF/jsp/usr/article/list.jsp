@@ -31,22 +31,25 @@
 		<div class="page-menu mt-3 flex justify-center">
 			<c:set var="pageMenuLen" value="5" />
 			<c:set var="startPage" value="${page - pageMenuLen >= 1 ? page- pageMenuLen : 1}" />
-			<c:set var="endPage" value="${page + pageMenuLen <= pagesCount ? page + pageMenuLen : pagesCount}" />			
+			<c:set var="endPage" value="${page + pageMenuLen <= pagesCount ? page + pageMenuLen : pagesCount}" />
+			<c:set var="pageBaseUri" value="?boardId=${board.id}"/>
+			<c:set var="pageBaseUri" value="${pageBaseUri}&searchKeywordType=${param.searchKeywordType}"/>
+			<c:set var="pageBaseUri" value="${pageBaseUri}&searchKeyword=${param.searchKeyword}"/>		
 			<div class="btn-group">
 				<c:if test="${startPage > 1}">
-					<a class="btn btn-sm" href="?page=1&boardId=${board.id }">1</a>					
+					<a class="btn btn-sm" href="${pageBaseUri}&page=1">1</a>					
 				</c:if>
 				<c:if test="${startPage > 2}">
 					<a class="btn btn-sm btn-disabled">...</a>
 				</c:if>
 				<c:forEach begin="${startPage }" end="${endPage }" var="i">
-					<a class="btn btn-sm ${page == i ? 'btn-active' : '' }" href="?page=${i }&boardId=${board.id }">${i }</a>
+					<a class="btn btn-sm ${page == i ? 'btn-active' : '' }" href="${pageBaseUri}&page=${i }">${i }</a>
 				</c:forEach>
 				<c:if test="${endPage < pagesCount - 1}">
 					<a class="btn btn-sm btn-disabled">...</a>
 				</c:if>
 				<c:if test="${endPage < pagesCount}">					
-					<a class="btn btn-sm" href="?page=${pagesCount }&boardId=${board.id }">${pagesCount }</a>
+					<a class="btn btn-sm" href="${pageBaseUri}&page=${pagesCount }">${pagesCount }</a>
 				</c:if>
 			</div>
 		</div>			
