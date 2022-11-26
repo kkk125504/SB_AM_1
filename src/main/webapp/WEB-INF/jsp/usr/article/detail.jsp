@@ -92,6 +92,7 @@
 		//ArticleDetail__increaseHitCount();
 		// 연습코드
 		setTimeout(ArticleDetail__increaseHitCount, 2000);
+		selectedReactionPoint();
 	})
 </script>	
 <section class="mt-8 text-xl">

@@ -22,6 +22,16 @@ public class ReactionPointService {
 		}
 		return reactionPointRepository.getSumReactionPointByMemberId(actorId, relTypeCode, id) == 0;
 	}
+	
+	public boolean isSelectedGoodReactionPoint(int actorId, String relTypeCode, int relId) {
+		
+		return reactionPointRepository.isSelectedGoodReactionPoint(actorId, relTypeCode, relId);
+	}
+
+	public boolean isSelectedBadReactionPoint(int actorId, String relTypeCode, int relId) {
+		
+		return reactionPointRepository.isSelectedBadReactionPoint(actorId, relTypeCode, relId);
+	}
 
 	public ResultData addGoodReactionPoint(int actorId, String relTypeCode, int relId) {
 		reactionPointRepository.addGoodReactionPoint(actorId, relTypeCode, relId);
@@ -43,16 +53,6 @@ public class ReactionPointService {
 		}
 		int badReactionPoint = articleService.getBadReactionPoint(relId);
 		return ResultData.from("S-1", "싫어요 증가 되었습니다", "badReactionPoint", badReactionPoint);
-	}
-
-	public boolean isSelectedGoodReactionPoint(int actorId, String relTypeCode, int relId) {
-		
-		return reactionPointRepository.isSelectedGoodReactionPoint(actorId, relTypeCode, relId);
-	}
-
-	public boolean isSelectedBadReactionPoint(int actorId, String relTypeCode, int relId) {
-		
-		return reactionPointRepository.isSelectedBadReactionPoint(actorId, relTypeCode, relId);
 	}
 
 	public ResultData removeGoodReationPoint(int actorId, String relTypeCode, int relId) {
