@@ -66,8 +66,7 @@ public class UsrArticleController {
 		boolean isSelectedBadReactionPoint = reactionPointService.isSelectedBadReactionPoint(rq.getLoginedMemberId(),"article",id);
 		
 		List<Reply> replies = replyService.getForPrintReplies("article",id);
-		int repliesCount = replies.size();
-		model.addAttribute("repliesCount",repliesCount);
+		model.addAttribute("replies",replies);
 		
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
