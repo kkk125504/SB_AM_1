@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kjh.exam.demo.service.ArticleService;
 import com.kjh.exam.demo.service.BoardService;
 import com.kjh.exam.demo.service.ReactionPointService;
+import com.kjh.exam.demo.service.ReplyService;
 import com.kjh.exam.demo.util.Ut;
 import com.kjh.exam.demo.vo.Article;
 import com.kjh.exam.demo.vo.Board;
+import com.kjh.exam.demo.vo.Reply;
 import com.kjh.exam.demo.vo.ResultData;
 import com.kjh.exam.demo.vo.Rq;
 
@@ -27,6 +29,8 @@ public class UsrArticleController {
 	private BoardService boardService;
 	@Autowired
 	private ReactionPointService reactionPointService;
+	@Autowired
+	private ReplyService replyService;
 	@Autowired
 	private Rq rq;
 
@@ -60,6 +64,10 @@ public class UsrArticleController {
 		
 		boolean isSelectedGoodReactionPoint = reactionPointService.isSelectedGoodReactionPoint(rq.getLoginedMemberId(),"article",id);
 		boolean isSelectedBadReactionPoint = reactionPointService.isSelectedBadReactionPoint(rq.getLoginedMemberId(),"article",id);
+		
+		List<Reply> replies = replyService.getForPrintReplies("article",id);
+		int repliesCount = replies.size();
+		model.addAttribute("repliesCount",repliesCount);
 		
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 		
