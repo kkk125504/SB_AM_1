@@ -87,6 +87,25 @@
 		}
 	}
 	
+	var replyWrite__submitDone = false;
+	function ReplyWrite__submitForm(form) {
+		
+		if(replyWrite__submitDone){
+			alert('이미 처리중 입니다.');
+			return;
+		}
+		form.body.value = form.body.value.trim();
+		
+		if(form.body.value.length == 0){
+			alert('댓글을 입력해 주세요.');
+			form.body.focus();
+			return;
+		}
+		
+		form.submit();
+		replyWrite__submitDone = true;
+	}
+	
 	$(function() {
 		// 실전코드
 		//ArticleDetail__increaseHitCount();
@@ -156,7 +175,7 @@
 	<div class="container mx-auto px-3">
 		<h2>댓글 작성</h2>
 		<c:if test="${rq.logined }">
-			<form class="table-box-type-1" method="POST" action="../reply/doWrite">
+			<form class="table-box-type-1" onsubmit="ReplyWrite__submitForm(this); return false;" method="POST" action="../reply/doWrite">
 				<input type="hidden" name="relTypeCode" value="article" />
 				<input type="hidden" name="relId" value="${article.id }" />
 				<table class="table table-zebra w-full">
@@ -173,8 +192,7 @@
 							<th>내용</th>
 							<td>
 								<textarea required="required" class="textarea textarea-bordered w-full" type="text" name="body"
-									placeholder="댓글을 입력해주세요" rows="5"
-								/></textarea>
+									placeholder="댓글을 입력해주세요" rows="5"/></textarea>
 							</td>
 						</tr>
 						<tr>
