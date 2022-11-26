@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="com.kjh.exam.demo.util.Ut"%>
 <c:set var="pageTitle" value="MYPAGE" />
 <%@ include file="../common/head.jspf" %>
 <section class="mt-8 text-xl">
@@ -37,7 +38,7 @@
 					<tr>
 						<th></th>
 						<td>
-							<a href="../member/checkPassword" class="btn btn-active btn-ghost">회원정보 수정 </a>
+							<a href="../member/checkPassword?replaceUri=${Ut.getUriEncoded('../member/modify')}" class="btn btn-active btn-ghost">회원정보 수정 </a>
 							<button class="btn-text-link btn btn-active btn-ghost" type="button" onclick="history.back();">뒤로가기</button>
 						</td>
 					</tr>

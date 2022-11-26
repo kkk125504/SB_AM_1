@@ -1,5 +1,8 @@
 package com.kjh.exam.demo.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class Ut {
 
 	public static boolean empty(Object obj) {
@@ -56,5 +59,13 @@ public class Ut {
 				location.replace('%s');
 				</script>
 				""", msg, replaceUri);
+	}
+
+	public static String getUriEncoded(String str) {
+		try {
+			return URLEncoder.encode(str, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			return str;
+		}
 	}
 }
