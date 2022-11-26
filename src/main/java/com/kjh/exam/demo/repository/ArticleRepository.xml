@@ -145,5 +145,10 @@
 		SELECT badReactionPoint FROM article
 		WHERE id = #{relId}
 	</select>
+	
+	<select id="getArticle" resultType="Article">
+		SELECT * FROM article
+		WHERE id = #{relId}
+	</select>
 			
 </mapper>

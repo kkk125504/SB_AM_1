@@ -40,4 +40,6 @@ public interface ArticleRepository {
 
 	public int getBadReactionPoint(int relId);
 
+	public Article getArticle(int relId);
+
 }

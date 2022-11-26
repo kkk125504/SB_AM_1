@@ -149,4 +149,9 @@ public class ArticleService {
 
 		return articleRepository.getBadReactionPoint(relId);
 	}
+	
+	public Article getArticle(int relId) {
+
+		return articleRepository.getArticle(relId);
+	}
 }
