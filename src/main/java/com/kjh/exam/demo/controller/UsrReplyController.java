@@ -43,7 +43,7 @@ public class UsrReplyController {
 				break;
 			}
 		}
-		
+
 		return rq.jsReplace(writeReplyRd.getMsg(), replaceUri);
 	}
 }

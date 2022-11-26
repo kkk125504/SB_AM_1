@@ -215,30 +215,38 @@
 		<h2>댓글 리스트(${replies.size() })</h2>
 		<table class="table table-fixed w-full">
 			<colgroup>
-				<col width="50" />
+				<col width="150" />
 				<col width="100" />
 				<col width="100" />
-				<col width="50" />
-				<col width="140" />
+				<col width="250" />
+				<col width="80" />
 			</colgroup>
 			<thead>
 				<tr>
-					<th>번호</th>
 					<th>날짜</th>
 					<th>작성자</th>
 					<th>추천</th>
 					<th>내용</th>
+					<th>비고</th>
 				</tr>
 			</thead>
 
 			<tbody>
 				<c:forEach var="reply" items="${replies }">
 					<tr class="hover">
-						<td>${reply.id}</td>
 						<td>${reply.regDate}</td>
 						<td>${reply.extra__writerName}</td>
 						<td>${reply.goodReactionPoint}</td>
 						<td class="text-left">${reply.getForPrintBody()}</td>
+						<td>
+							<c:if test="${reply.extra__actorCanModify }">
+								<a class="btn btn-ghost" href="../reply/modify?id=${reply.id }">수정</a>
+							</c:if>
+							<c:if test="${reply.extra__actorCanDelete }">
+								<a class="btn btn-ghost" onclick="if(confirm('삭제 하시겠습니까?') == false) return false;"
+									href="../reply/doDelete?id=${reply.id }">삭제</a>
+							</c:if>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
