@@ -15,7 +15,7 @@
 		form.body.value = form.body.value.trim();
 		
 		if(form.body.value.length == 0){
-			alert('댓글을 작성 해주세요.');
+			alert('내용을 작성 해주세요.');
 			form.body.focus();
 			return;
 		}
@@ -47,6 +47,7 @@
 					<tr>
 						<th>번호</th>
 						<td>
+							<input type="hidden" name="id" value="${reply.id}"/>
 							<div class="badge">${reply.id }</div>
 						</td>
 					</tr>

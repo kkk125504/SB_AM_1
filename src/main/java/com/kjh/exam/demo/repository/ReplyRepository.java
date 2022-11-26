@@ -6,12 +6,13 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.kjh.exam.demo.vo.Reply;
 
 @Mapper
 public interface ReplyRepository {
-		
+
 	@Insert("""
 			<script>
 			INSERT INTO reply
@@ -31,7 +32,7 @@ public interface ReplyRepository {
 			</script>
 			""")
 	int getLastInsertId();
-	
+
 	@Select("""
 			<script>
 			SELECT R.*, M.nickname AS extra__writerName
@@ -43,14 +44,14 @@ public interface ReplyRepository {
 			</script>
 			""")
 	List<Reply> getForPrintReplies(String relTypeCode, int relId);
-	
-	@Select("""	
+
+	@Select("""
 			SELECT R.*,
 			M.nickname AS extra__writerName
 			FROM reply AS R
 			LEFT JOIN `member` AS M
 			ON R.memberId = M.id
-			WHERE R.id = #{id}			
+			WHERE R.id = #{id}
 			""")
 	Reply getForPrintReply(int id);
 
@@ -59,5 +60,13 @@ public interface ReplyRepository {
 			WHERE id = #{id}
 			""")
 	void deleteReply(int id);
-	
+
+	@Update("""
+			UPDATE reply
+			SET updateDate = NOW(),
+			`body` = #{body}
+			WHERE id= #{id}
+			""")
+	void modifyReply(int id, String body);
+
 }
