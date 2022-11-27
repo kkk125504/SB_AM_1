@@ -106,8 +106,5 @@ public class Rq {
 
 		return Ut.getUriEncoded(getCurrentUri());
 	}
-	
-	public void initOnBeforeActionInterceptor() {
-	
-	}
+
 }

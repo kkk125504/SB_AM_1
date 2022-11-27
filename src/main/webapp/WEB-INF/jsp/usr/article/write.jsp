@@ -2,9 +2,34 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="WRITE" />
 <%@ include file="../common/head.jspf" %>
+<%@ include file="../common/toastUiEditorLib.jspf" %>
+<script>
+	var ArticleWrite__submitDone = false;
+	function ArticleWrite__submit(form){		
+		form.title.value = form.title.value.trim();
+		
+		if(form.title.value.length == 0){
+			alert('제목을 입력해 주세요');
+			return;
+		}
+		const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
+		
+		const markdown = editor.getMarkdown().trim();
+		
+		if (markdown.length == 0) {
+			alert('내용을 입력해주세요');
+			editor.focus();
+			return;
+		}
+		
+		form.body.value = markdown;
+		form.submit();		
+	}
+</script>
 	<section class="mt-8 text-xl">
 		<div class="container mx-auto px-3">
-			<form class="table-box-type-1" method="post" action="doWrite">
+			<form class="table-box-type-1" method="post" action="doWrite" onsubmit ="ArticleWrite__submit(this); return false;">
+				<input type="hidden" name ="body" />
 				<table>
 					<colgroup>
 						<col width="200" />
@@ -26,7 +51,11 @@
 						</tr>
 						<tr>
 							<td>내용</td>
-							<td><textarea required="required" name="body" class="textarea textarea-bordered h-52 w-11/12" placeholder="내용을 입력해주세요." >${article.body }</textarea></td>						
+							<td>
+								<div class="toast-ui-editor">
+	     							 <script type="text/x-template"></script>
+	    						</div>
+	    					</td>								
 						</tr>
 						<tr>
 							<td>작성자</td>

@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="ARTICLE" />
 <%@ include file="../common/head.jspf" %>
+<%@ include file="../common/toastUiEditorLib.jspf" %>
 <script>
 		const params = {};
 		params.id = parseInt('${param.id}');
@@ -140,7 +141,11 @@
 					</tr>
 					<tr>
 						<td class="bg-gray-200">내용</td>
-						<td>${article.getForPrintBody() }</td>						
+						<td>
+							<div class="toast-ui-viewer">
+								<script type="text/x-template">${article.body}</script>
+							</div>
+						</td>				
 					</tr>
 					<tr>
 						<td class="bg-gray-200">작성자</td>
