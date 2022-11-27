@@ -12,8 +12,10 @@ public interface MemberRepository {
 	int getLastInsertId();
 
 	public Member getMemberById(int id);
-	
+
 	public Member getMemberByLoginId(String loginId);
-	
+
 	public Member getMemberByNameAndEmail(String name, String email);
+
+	public void modify(int actorId, String loginPw, String nickname, String cellphoneNum, String email);
 }
