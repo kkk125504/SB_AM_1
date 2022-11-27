@@ -1,6 +1,7 @@
 package com.kjh.exam.demo.vo;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,7 @@ public class Rq {
 	private int loginedMemberId;
 	@Getter
 	private Member loginedMember;
+	private Map<String, String> paramMap;
 
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
@@ -36,6 +38,7 @@ public class Rq {
 		boolean isLogined = false;
 		int loginedMemberId = -1;
 		Member loginedMember = null;
+		paramMap = Ut.getParamMap(req);
 		if (httpSession.getAttribute("loginedMemberId") != null) {
 			isLogined = true;
 			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
@@ -53,9 +56,9 @@ public class Rq {
 
 	public void printReplaceJs(String msg, String uri) {
 		resp.setContentType("text/html; charset=UTF-8");
-		println(Ut.jsReplace(msg,uri));				
+		println(Ut.jsReplace(msg, uri));
 	}
-	
+
 	public void print(String msg) {
 		try {
 			resp.getWriter().append(msg);
@@ -67,11 +70,11 @@ public class Rq {
 	public void println(String str) {
 		print(str + "\n");
 	}
-	
+
 	public boolean isNotLogined() {
 		return !isLogined;
 	}
-	
+
 	public void login(Member member) {
 		httpSession.setAttribute("loginedMemberId", member.getId());
 		httpSession.setAttribute("loginedMemberLoginId", member.getLoginId());
@@ -95,7 +98,7 @@ public class Rq {
 	public String jsReplace(String msg, String uri) {
 		return Ut.jsReplace(msg, uri);
 	}
-	
+
 	public String getCurrentUri() {
 		String currentUri = req.getRequestURI();
 		String queryString = req.getQueryString();
@@ -111,12 +114,22 @@ public class Rq {
 
 		return Ut.getUriEncoded(getCurrentUri());
 	}
-	
+
 	public String getLoginUri() {
 		return "../member/login?afterLoginUri=" + getAfterLoginUri();
 	}
 
 	public String getAfterLoginUri() {
+		String requestUri = req.getRequestURI();
+
+		switch (requestUri) {
+		case "/usr/member/login":
+		case "/usr/member/join":
+		case "/usr/member/findLoginId":
+		case "/usr/member/findLoginPw":
+			return Ut.getUriEncoded(paramMap.get("afterLoginUri"));
+		}
 		return getEncodedCurrentUri();
 	}
+
 }
