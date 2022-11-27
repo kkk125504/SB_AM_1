@@ -122,24 +122,45 @@ public class UsrMemberController {
 		if (rq.getLoginedMember().getLoginPw().equals(loginPw) == false) {
 			return rq.jsHistoryBack("비밀번호가 일치하지 않습니다.");
 		}
-		
-		if(replaceUri.equals("../member/modify")) {
+
+		if (replaceUri.equals("../member/modify")) {
 			String memberModifyAuthKey = memberService.genMemberModifyAuthKey(rq.getLoginedMemberId());
 
 			replaceUri += "?memberModifyAuthKey=" + memberModifyAuthKey;
 		}
-		
+
 		return rq.jsReplace("비밀번호 확인", replaceUri);
 	}
 
 	@RequestMapping("/usr/member/modify")
-	public String showModify() {
+	public String showModify(String memberModifyAuthKey) {
+		if (Ut.empty(memberModifyAuthKey)) {
+			return rq.jsHistoryBackOnView("인증코드가 없거나 만료 되었습니다.");
+		}
+		ResultData checkMemberModifyAuthKeyRd = memberService.checkMemberModifyAuthKey(rq.getLoginedMemberId(),
+				memberModifyAuthKey);
+
+		if (checkMemberModifyAuthKeyRd.isFail()) {
+			return rq.jsHistoryBackOnView(checkMemberModifyAuthKeyRd.getMsg());
+		}
 		return "usr/member/modify";
 	}
 
 	@RequestMapping("/usr/member/doModify")
 	@ResponseBody
-	public String doModify(String loginPw, String nickname, String cellphoneNum, String email) {
+	public String doModify(String loginPw, String nickname, String cellphoneNum, String email,
+			String memberModifyAuthKey) {
+		
+		if (Ut.empty(memberModifyAuthKey)) {
+			return rq.jsHistoryBackOnView("인증코드가 없거나 만료 되었습니다.");
+		}
+		ResultData checkMemberModifyAuthKeyRd = memberService.checkMemberModifyAuthKey(rq.getLoginedMemberId(),
+				memberModifyAuthKey);
+
+		if (checkMemberModifyAuthKeyRd.isFail()) {
+			return rq.jsHistoryBackOnView(checkMemberModifyAuthKeyRd.getMsg());
+		}
+
 		ResultData modifyRd = memberService.modify(rq.getLoginedMemberId(), loginPw, nickname, cellphoneNum, email);
 
 		return rq.jsReplace(modifyRd.getMsg(), "/");
