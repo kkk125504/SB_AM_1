@@ -1,6 +1,17 @@
 server:
   port: 8081
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: kginyc4012@gmail.com
+    password: viharxzkiuovralt
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     url: jdbc:log4jdbc:mysql://127.0.0.1:3306/SB_AM?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
@@ -13,6 +24,10 @@ spring:
 mybatis:
   type-aliases-package: com.kjh.exam.demo.vo
 custom:
+  siteName: SB_AM
+  siteMainUri: http://localhost:8081
+  emailFrom: no-reply@localhost
+  emailFromName: SB_AM
   logging:
     dir: log
     level: debug  
