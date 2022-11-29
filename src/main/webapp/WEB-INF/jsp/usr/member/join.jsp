@@ -2,7 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="JOIN" />
 <%@ include file="../common/head.jspf"%>
-
+<!-- lodash debounce -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
 <script>
 	let submitJoinFormDone = false;
 	let validLoginId = "";
@@ -96,6 +97,8 @@
 			}
 		}, 'json');
 	}
+	
+	const checkLoginIdDupDebounced = _.debounce(checkLoginIdDup,1000);
 </script>
 
 <section class="mt-8 text-xl">
@@ -111,7 +114,7 @@
 					<tr>
 						<th>아이디</th>
 						<td>
-							<input name="loginId" class="w-full input input-bordered  max-w-xs" onkeyup="checkLoginIdDup(this);" placeholder="아이디를 입력해주세요" />
+							<input name="loginId" class="w-full input input-bordered  max-w-xs" onkeyup="checkLoginIdDupDebounced(this);" placeholder="아이디를 입력해주세요" />
 							<div class="loginId-msg"></div>
 						</td>
 					</tr>
