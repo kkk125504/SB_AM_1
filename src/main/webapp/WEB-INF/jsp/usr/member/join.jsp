@@ -95,10 +95,16 @@
 				$('.loginId-msg').html('<div class="mt-2 text-red-500">' + data.msg + '</div>');
 				validLoginId = '';
 			}
+			
+			if (data.resultCode == 'F-B'){
+				alert(data.msg);
+				location.replace('/');
+			}			
 		}, 'json');
 	}
 	
 	const checkLoginIdDupDebounced = _.debounce(checkLoginIdDup,1000);
+	
 </script>
 
 <section class="mt-8 text-xl">

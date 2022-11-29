@@ -25,6 +25,8 @@ public class Rq {
 	private int loginedMemberId;
 	@Getter
 	private Member loginedMember;
+	@Getter
+	private boolean isAjax;
 	private Map<String, String> paramMap;
 
 	private HttpServletRequest req;
@@ -47,6 +49,24 @@ public class Rq {
 		this.isLogined = isLogined;
 		this.loginedMemberId = loginedMemberId;
 		this.loginedMember = loginedMember;
+		
+		String requestUri = req.getRequestURI();
+
+		boolean isAjax = requestUri.endsWith("Ajax");
+
+		if (isAjax == false) {
+			if (paramMap.containsKey("ajaxMode") && paramMap.get("ajaxMode").equals("Y")) {
+				isAjax = true;
+			} else if (paramMap.containsKey("isAjax") && paramMap.get("isAjax").equals("Y")) {
+				isAjax = true;
+			}
+		}
+		if (isAjax == false) {
+			if (requestUri.contains("/get")) {
+				isAjax = true;
+			}
+		}
+		this.isAjax = isAjax;
 	}
 
 	public void printHistoryBackJs(String msg) {
