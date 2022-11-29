@@ -55,6 +55,11 @@
 							<span>LOGIN</span>
 						</a>
 					</li>
+					<li class="hover:underline">
+						<a class="flex h-full items-center px-3" href="${rq.joinUri }">
+							<span>JOIN</span>
+						</a>
+					</li>
 				</c:if>
 				<c:if test="${rq.isLogined() }">
 					<li class="hover:underline">
