@@ -170,4 +170,20 @@ public class UsrMemberController {
 
 		return rq.jsReplace(modifyRd.getMsg(), "/");
 	}
+	
+	@RequestMapping("/usr/member/getLoginIdDup")
+	@ResponseBody
+	public ResultData getLoginIdDup(String loginId) {
+		if (Ut.empty(loginId)) {
+			return ResultData.from("F-A", "아이디를 입력해주세요");
+		}
+
+		Member exsistMember = memberService.getMemberByLoginId(loginId);
+
+		if (exsistMember != null) {
+			return ResultData.from("F-A2", "이미 사용중인 아이디입니다.", "loginId", loginId);
+		}
+
+		return ResultData.from("S-1", "사용 가능한 아이디 입니다.", "loginId", loginId);
+	}
 }

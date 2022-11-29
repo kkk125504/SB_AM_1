@@ -5,6 +5,7 @@
 
 <script>
 	let submitJoinFormDone = false;
+	let loginIdDup = true;
 	function submitJoinForm(form) {
 		if (submitJoinFormDone) {
 			alert('처리중입니다');
@@ -16,6 +17,13 @@
 			form.loginId.focus();
 			return;
 		}
+		
+		if(loginIdDup){
+			alert('중복되는 아이디 입니다.');
+			form.loginId.focus();
+			return;
+		}
+		
 		form.loginPw.value = form.loginPw.value.trim();
 		if (form.loginPw.value == 0) {
 			alert('비밀번호를 입력해주세요');
@@ -60,6 +68,25 @@
 		submitJoinFormDone = true;
 		form.submit();
 	}
+	
+	function checkLoginIdDup(el) {
+		$('.loginId-msg').empty();
+		
+		const form = $(el).closest('form').get(0);
+		
+		$.get('../member/getLoginIdDup', {			
+			loginId : form.loginId.value,
+			ajaxMode : 'Y'
+		}, function(data) {
+			if (data.success) {
+				$('.loginId-msg').html('<div class="mt-2 text-green-500">' + data.msg + '</div>');
+				loginIdDup = false;
+			} else {
+				$('.loginId-msg').html('<div class="mt-2 text-red-500">' + data.msg + '</div>');
+				loginIdDup = true;
+			}
+		}, 'json');
+	}
 </script>
 
 <section class="mt-8 text-xl">
@@ -75,7 +102,8 @@
 					<tr>
 						<th>아이디</th>
 						<td>
-							<input name="loginId" class="w-full input input-bordered  max-w-xs" placeholder="아이디를 입력해주세요" />
+							<input name="loginId" class="w-full input input-bordered  max-w-xs" onkeyup="checkLoginIdDup(this);" placeholder="아이디를 입력해주세요" />
+							<div class="loginId-msg"></div>
 						</td>
 					</tr>
 					<tr>

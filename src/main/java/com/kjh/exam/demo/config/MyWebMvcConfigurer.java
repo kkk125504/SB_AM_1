@@ -46,6 +46,8 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		registry.addInterceptor(needLogoutInterceptor)
 				.addPathPatterns("/usr/member/login")
 				.addPathPatterns("/usr/member/doLogin")
-				.addPathPatterns("/usr/member/doJoin");		
+				.addPathPatterns("/usr/member/doJoin")
+				.addPathPatterns("/usr/member/doJoin")
+				.addPathPatterns("/usr/member/getLoginIdDup");
 	}
 }
