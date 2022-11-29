@@ -47,7 +47,7 @@
 						<tr>
 							<td>${article.id }</td>
 							<td>${article.forPrintType1RegDate}</td>
-							<td><a href="../article/detail?id=${article.id}">${article.title}</a></td>
+							<td><a href="${rq.getArticleDetailUriFromArticleList(article)}">${article.title}</a></td>
 							<td>${article.extra__writer}</td>
 							<td>${article.hitCount}</td>
 						</tr>
