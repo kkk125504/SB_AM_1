@@ -27,6 +27,7 @@
 <section class="mt-8 text-xl">
 	<div class="container mx-auto px-3">
 		<form class="table-box-type-1" method="post" action="doModify" onsubmit="ReplyModify__submitForm(this); return false;" >
+			<input type="hidden" name="replaceUri" value="${param.replaceUri }" />
 			<table>
 				<colgroup>
 					<col width="200" />
@@ -79,7 +80,7 @@
 						<th></th>
 						<td>
 							<button class="btn btn-active btn-ghost" type="submit">수정</button>
-							<button class ="btn-text-link btn btn-active btn-ghost" type="button" onclick="history.back()">뒤로가기</button>
+							<a class ="btn-text-link btn btn-active btn-ghost" href="${param.replaceUri }">뒤로가기</a>
 						</td>
 					</tr>
 				</tbody>								
