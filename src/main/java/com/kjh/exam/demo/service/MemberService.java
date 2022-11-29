@@ -48,7 +48,7 @@ public class MemberService {
 		return member;
 	}
 
-	private Member getMemberByNameAndEmail(String name, String email) {
+	public Member getMemberByNameAndEmail(String name, String email) {
 		Member member = memberRepository.getMemberByNameAndEmail(name, email);
 		return member;
 	}
