@@ -127,9 +127,23 @@ public class Rq {
 		case "/usr/member/join":
 		case "/usr/member/findLoginId":
 		case "/usr/member/findLoginPw":
-			return Ut.getUriEncoded(paramMap.get("afterLoginUri"));
+			return Ut.getUriEncoded(Ut.getAttr(paramMap, "afterLoginUri", ""));
 		}
 		return getEncodedCurrentUri();
 	}
-
+	
+	public String getLogoutUri() {
+		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
+	}
+	
+	public String getAfterLogoutUri() {
+		String requestUri = req.getRequestURI();
+		switch (requestUri) {
+		case "/usr/article/write":
+		case "/usr/article/modify":
+		case "/usr/member/myPage":
+			return Ut.getUriEncoded("/");
+		}
+		return getEncodedCurrentUri();
+	}
 }
