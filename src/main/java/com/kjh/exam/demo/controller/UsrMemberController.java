@@ -86,7 +86,7 @@ public class UsrMemberController {
 		if (member == null) {
 			return Ut.jsHistoryBack(Ut.f("해당하는 아이디(%s)를 찾을수 없습니다.", loginId));
 		}
-		if (member.getLoginPw().equals(loginPw) == false) {
+		if (member.getLoginPw().equals(Ut.sha256(loginPw)) == false) {
 			return Ut.jsHistoryBack("비밀번호가 일치하지 않습니다.");
 		}
 		rq.login(member);

@@ -31,6 +31,7 @@ public class MemberService {
 			return ResultData.from("F-8", Ut.f("중복되는 이름(%s)과 이메일(%s)이 있습니다", name, email));
 		}
 
+		loginPw = Ut.sha256(loginPw);
 		memberRepository.doJoin(loginId, loginPw, name, nickname, cellphoneNum, email);
 		int id = memberRepository.getLastInsertId();
 

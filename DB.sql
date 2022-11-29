@@ -268,6 +268,13 @@ ALTER TABLE `attr` ADD INDEX (`relTypeCode`, `typeCode`, `type2Code`);
 # attr에 만료날짜 추가
 ALTER TABLE `attr` ADD COLUMN `expireDate` DATETIME NULL AFTER `value`;
 
+# 회원 테이블의 로그인 비밀번호의 길이를 100으로 늘림
+ALTER TABLE `member` MODIFY COLUMN loginPw VARCHAR(100) NOT NULL;
+
+# 기존 회원의 비밀번호를 암호화 
+UPDATE `member`
+SET loginPw = SHA2(loginPw, 256);
+
 #################################
 /*
 # 게시물 갯수 늘리기
