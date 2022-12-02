@@ -158,7 +158,7 @@ public class Rq {
 	}
 	
 	public String getLogoutUri() {
-		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
+		return "/usr/member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
 	}
 	
 	public String getAfterLogoutUri() {
@@ -167,6 +167,7 @@ public class Rq {
 		case "/usr/article/write":
 		case "/usr/article/modify":
 		case "/usr/member/myPage":
+		case "/adm/member/list":
 			return Ut.getUriEncoded("/");
 		}
 		return getEncodedCurrentUri();
