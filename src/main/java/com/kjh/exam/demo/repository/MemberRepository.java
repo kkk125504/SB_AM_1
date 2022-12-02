@@ -1,5 +1,7 @@
 package com.kjh.exam.demo.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.kjh.exam.demo.vo.Member;
@@ -18,4 +20,9 @@ public interface MemberRepository {
 	public Member getMemberByNameAndEmail(String name, String email);
 
 	public void modify(int actorId, String loginPw, String nickname, String cellphoneNum, String email);
+
+	public int getMembersCount(String authLevel, String searchKeywordTypeCode, String searchKeyword);
+
+	public List<Member> getForPrintMembers(String authLevel, String searchKeywordTypeCode, String searchKeyword,
+			int limitStart, int limitTake);
 }
