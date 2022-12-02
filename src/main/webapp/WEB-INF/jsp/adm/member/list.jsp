@@ -33,6 +33,7 @@
 			<table class="table table-fixed w-full">
 				<colgroup>
 					<col width="100" />
+					<col width="100" />
 					<col width="200" />
 					<col width="200" />
 					<col width= />
@@ -41,6 +42,7 @@
 				</colgroup>
 				<thead>
 					<tr>
+						<th><input type="checkbox" class="checkbox-all-member-id" /></th>
 						<th>번호</th>
 						<th>가입날짜</th>
 						<th>수정날짜</th>
@@ -53,6 +55,7 @@
 				<tbody>
 					<c:forEach var="member" items="${members }">
 						<tr class="hover">
+							<th><input type="checkbox" class="checkbox-member-id" value="${member.id }" /></th>
 							<td>${member.id}</td>
 							<td>${member.forPrintType1RegDate}</td>
 							<td>${member.forPrintType1UpdateDate}</td>
