@@ -72,6 +72,7 @@
 		</div>
 		<form method="POST" name="do-delete-members-form" action="../member/doDeleteMembers">
 			<input type="hidden" name="ids" value="" />
+			<input type="hidden" name="replaceUri" value="${rq.currentUri}" />
 		</form>
 		<div class="page-menu mt-3 flex justify-center">
 			<div class="btn-group">

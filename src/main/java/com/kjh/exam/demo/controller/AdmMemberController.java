@@ -1,5 +1,6 @@
 package com.kjh.exam.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kjh.exam.demo.service.MemberService;
+import com.kjh.exam.demo.util.Ut;
 import com.kjh.exam.demo.vo.Member;
 import com.kjh.exam.demo.vo.Rq;
 
@@ -41,5 +44,20 @@ public class AdmMemberController {
 		model.addAttribute("page", page);
 
 		return "adm/member/list";
+	}
+	
+	@RequestMapping("/adm/member/doDeleteMembers")
+	@ResponseBody
+	public String doDeleteMembers(@RequestParam(defaultValue = "") String ids,
+			@RequestParam(defaultValue = "/adm/member/list") String replaceUri) {
+		List<Integer> memberIds = new ArrayList<>();
+
+		for (String idStr : ids.split(",")) {
+			memberIds.add(Integer.parseInt(idStr));
+		}
+
+		memberService.deleteMembers(memberIds);
+
+		return Ut.jsReplace("해당 회원들이 삭제되었습니다.", replaceUri);
 	}
 }

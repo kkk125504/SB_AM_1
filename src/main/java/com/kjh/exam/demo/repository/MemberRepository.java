@@ -25,4 +25,6 @@ public interface MemberRepository {
 
 	public List<Member> getForPrintMembers(String authLevel, String searchKeywordTypeCode, String searchKeyword,
 			int limitStart, int limitTake);
+
+	public void deleteMember(int id);
 }
