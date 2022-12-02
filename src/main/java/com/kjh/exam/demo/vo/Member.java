@@ -13,7 +13,7 @@ public class Member {
 	private String updateDate;
 	private String loginId;
 	private String loginPw;
-	private String authLevel;
+	private int authLevel;
 	private String name;
 	private String nickname;
 	private String cellphoneNum;
@@ -26,5 +26,9 @@ public class Member {
 	}
 	public String getForPrintType1UpdateDate() {
 		return updateDate.substring(2, 16).replace(" ", "<br />");
+	}
+	
+	public boolean isAdmin() {
+		return this.authLevel == 7;
 	}
 }

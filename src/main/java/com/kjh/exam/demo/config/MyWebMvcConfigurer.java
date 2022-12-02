@@ -6,6 +6,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.kjh.exam.demo.interceptor.BeforeActionInterceptor;
+import com.kjh.exam.demo.interceptor.NeedAdminInterceptor;
 import com.kjh.exam.demo.interceptor.NeedLoginInterceptor;
 import com.kjh.exam.demo.interceptor.NeedLogoutInterceptor;
 
@@ -18,7 +19,9 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 	NeedLoginInterceptor needLoginInterceptor;
 	@Autowired
 	NeedLogoutInterceptor needLogoutInterceptor;
-
+	@Autowired
+	NeedAdminInterceptor needAdminInterceptor;
+	
 	// 인터셉터 적용
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(beforeActionInterceptor).addPathPatterns("/**").excludePathPatterns("/resource/**")
@@ -40,7 +43,8 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 				.addPathPatterns("/usr/member/myPage")
 				.addPathPatterns("/usr/member/doModify")
 				.addPathPatterns("/usr/member/checkPassword")
-				.addPathPatterns("/usr/member/doCheckPassword");
+				.addPathPatterns("/usr/member/doCheckPassword")
+				.addPathPatterns("/adm/**");
 
 				
 		registry.addInterceptor(needLogoutInterceptor)
@@ -49,5 +53,8 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 				.addPathPatterns("/usr/member/doJoin")
 				.addPathPatterns("/usr/member/doJoin")
 				.addPathPatterns("/usr/member/getLoginIdDup");
+		
+		registry.addInterceptor(needAdminInterceptor)
+				.addPathPatterns("/adm/**");
 	}
 }

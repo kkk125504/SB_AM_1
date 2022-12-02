@@ -25,3 +25,14 @@
 <script src="/resource/common.js" defer="defer"></script>
 </head>
 <body>
+	<div class="flex my-3 text-2xl">
+		<div class="container mx-auto px-3">
+			<h1>${pageTitle }&nbsp;PAGE</h1>
+		</div>
+
+		<div class="hover:underline">
+			<a class="h-full px-3 flex items-center" href="${rq.logoutUri}">
+				<span>LOGOUT</span>
+			</a>
+		</div>
+	</div>
