@@ -38,6 +38,7 @@ public class AdmMemberController {
 		model.addAttribute("members", members);
 		model.addAttribute("membersCount", membersCount);
 		model.addAttribute("pagesCount", pagesCount);
+		model.addAttribute("page", page);
 
 		return "adm/member/list";
 	}
