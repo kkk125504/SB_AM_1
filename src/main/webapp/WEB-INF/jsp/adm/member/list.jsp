@@ -95,4 +95,18 @@
 		</div>
 	</div>
 </section>
+<script>
+	$('.checkbox-all-member-id').change(function() {
+		const $all = $(this);
+		const allChecked = $all.prop('checked');
+		$('.checkbox-member-id').prop('checked', allChecked);
+	});
+	
+	$('.checkbox-member-id').change(function() { 
+		const checkboxMemberIdCount = $('.checkbox-member-id').length;
+		const checkboxMemberIdCheckedCount = $('.checkbox-member-id:checked').length;
+		const allChecked = checkboxMemberIdCount == checkboxMemberIdCheckedCount;
+		$('.checkbox-all-member-id').prop('checked', allChecked);
+	});
+</script>
 <%@ include file="../common/foot.jspf"%>
