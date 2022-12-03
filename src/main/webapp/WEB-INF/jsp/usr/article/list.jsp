@@ -23,6 +23,11 @@
 				maxlength="20" value="${param.searchKeyword }"/>
 
 				<button type="submit" class="ml-2 btn btn-ghost">SEARCH</button>
+				<select name="itemsInAPage" class="select select-bordered">						
+					<option value="10" ${param.itemsInAPage == 10 ? 'selected' : ''}>10개씩</option>
+					<option value="20" ${param.itemsInAPage == 20 ? 'selected' : ''}>20개씩</option>
+				</select>	
+				<button type="submit" class="mx-2 btn btn-ghost">보기</button>	
 			</form>
 		</div>
 		<div class="table-box-type-1 mt-2">
@@ -82,7 +87,8 @@
 			<c:set var="endPage" value="${page + pageMenuLen <= pagesCount ? page + pageMenuLen : pagesCount}" />
 			<c:set var="pageBaseUri" value="?boardId=${board.id}"/>
 			<c:set var="pageBaseUri" value="${pageBaseUri}&searchKeywordType=${param.searchKeywordType}"/>
-			<c:set var="pageBaseUri" value="${pageBaseUri}&searchKeyword=${param.searchKeyword}"/>		
+			<c:set var="pageBaseUri" value="${pageBaseUri}&searchKeyword=${param.searchKeyword}"/>
+			<c:set var="pageBaseUri" value="${pageBaseUri}&itemsInAPage=${param.itemsInAPage}"/>		
 			<div class="btn-group">
 				<c:if test="${startPage > 1}">
 					<a class="btn btn-sm" href="${pageBaseUri}&page=1">1</a>					
