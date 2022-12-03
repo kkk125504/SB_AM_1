@@ -111,6 +111,50 @@
 		form.submit();
 		replyWrite__submitDone = true;
 	}
+	//댓글 리스트 출력
+	function Reply__List() {	
+	      $.ajax({
+	        type: "GET",
+	        url: "../reply/getReplies",
+	        dataType: "json",
+	    	async : false,
+	    	data : {"relId" : params.id, "relTypeCode" : "article"},
+	        error: function() {
+	          console.log('통신실패!!');
+	        },
+	        success: function(data) {
+	        	var replyListContent = "";
+	 			if(data.data1.length < 1){
+	 				replyListContent += "댓글이 존재 하지 않습니다.";
+	 			}
+	 			$(data.data1).each(function(){
+	 				var loginedMemberId = ${rq.loginedMemberId};
+	 				var replyMemberId= this.memberId;				
+	 				replyListContent += '<div class="divider"></div>';
+	 				replyListContent += '<div class= "reply'+ this.id+'">'
+	 				replyListContent += '<div><span>'+this.extra__writerName +'</span></div>';
+	 				replyListContent += '<div class="bg-base-300 rounded-box "><span class="mx-8">';				
+	 				replyListContent += this.body+'</span></div>';							
+	  				if(loginedMemberId == replyMemberId){
+	  					replyListContent +='<button class="btn btn-outline btn-xs" onclick="Reply__ModifyForm()">수정</button>';
+	  					replyListContent +='<button class="btn btn-outline btn-xs" onclick="Reply__Delete('+ this.id +')">삭제</button>';
+	 				}
+	  				replyListContent += '</div>';
+	  				
+	  				$.get('../reply/getReplies', {
+					relId : this.id,
+					relTypeCode : 'reply',
+					ajaxMode : 'Y'
+					}, function(data) {
+						replyListContent += '<div>연결성공</div>';
+						console.log('실행!!');
+					},'json');	        
+	      });
+	 			$('.replyList').html(replyListContent); 
+	 			console.log(replyListContent);
+		}	        
+	   })
+	}
 	
 	$(function() {
 		// 실전코드
@@ -118,6 +162,7 @@
 		// 연습코드
 		setTimeout(ArticleDetail__increaseHitCount, 2000);
 		selectedReactionPoint();
+		Reply__List();
 	})
 </script>	
 <section class="mt-8 text-xl">
