@@ -93,6 +93,8 @@
 	}
 	
 	//댓글 리스트 출력
+	var replyIds = [];
+	var index = 0;
 	function Reply__List() {	
 	      $.ajax({
 	        type: "GET",
@@ -146,7 +148,7 @@
 				alert(data.data.msg);
 				return;
 			}
-			Reply__List();
+			Reply__List();			
 		}, 'json');	
 	}	
 	$(function() {
@@ -156,6 +158,7 @@
 		setTimeout(ArticleDetail__increaseHitCount, 2000);
 		selectedReactionPoint();
 		Reply__List();
+		ReOfRe__list();
 	})
 </script>	
 <section class="mt-8 text-xl">

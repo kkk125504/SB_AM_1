@@ -14,11 +14,11 @@ public interface ArticleRepository {
 	public List<Article> getForPrintArticles(int boardId, int limitStart, int limitTake, String searchKeywordType,
 			String searchKeyword);
 
-	public int writeArticle(int actorId, String title, String body, int boardId);
+	public int writeArticle(int actorId, String title, String body, int boardId, boolean secret);
 
 	public void deleteArticle(int id);
 
-	public void modifyArticle(int id, String title, String body);
+	public void modifyArticle(int id, String title, String body, boolean secret);
 
 	public int getLastInsertId();
 

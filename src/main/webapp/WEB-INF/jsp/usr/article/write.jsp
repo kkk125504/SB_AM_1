@@ -43,11 +43,14 @@
 								<option value="1">공지사항</option>
 								<option value="2">자유</option>
 							</select>
+							<input type="checkbox" name="secret">&nbsp;비밀글 설정
 						</td>
 						</tr>														
 						<tr>
 							<td>제목</td>
-							<td><input required="required" type="text" class="w-4/6 input input-bordered input-lg" name="title" value="${article.title }" placeholder="제목을 입력해주세요." /></td>						
+							<td>
+								<input required="required" type="text" class="w-4/6 input input-bordered input-lg" name="title" value="${article.title }" placeholder="제목을 입력해주세요." />
+							</td>						
 						</tr>
 						<tr>
 							<td>내용</td>

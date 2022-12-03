@@ -275,6 +275,9 @@ ALTER TABLE `member` MODIFY COLUMN loginPw VARCHAR(100) NOT NULL;
 UPDATE `member`
 SET loginPw = SHA2(loginPw, 256);
 
+#게시물에 secret컬럼 추가
+ALTER TABLE article ADD COLUMN secret TINYINT DEFAULT 0 NOT NULL;
+
 #################################
 /*
 # 게시물 갯수 늘리기

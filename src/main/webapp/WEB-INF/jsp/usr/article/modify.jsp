@@ -47,7 +47,11 @@
 						</tr>
 						<tr>
 							<td>제목</td>
-							<td><input type="text" class="w-4/6 input input-bordered input-lg" name="title" value="${article.title }" placeholder="제목을 입력해주세요." /></td>						
+							<td>
+								<input type="checkbox" name="secret" ${article.secret ? 'checked' : ''}>
+	  							<span>비밀글 설정&nbsp;</span>
+								<input type="text" class="w-4/6 input input-bordered input-lg" name="title" value="${article.title }" placeholder="제목을 입력해주세요." />
+							</td>						
 						</tr>
 						<tr>
 							<td>내용</td>

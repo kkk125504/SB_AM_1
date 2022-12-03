@@ -20,8 +20,8 @@ public class ArticleService {
 		this.articleRepository = articleRepository;
 	}
 
-	public ResultData<Integer> writeArticle(int actorId, String title, String body, int boardId) {
-		articleRepository.writeArticle(actorId, title, body, boardId);
+	public ResultData<Integer> writeArticle(int actorId, String title, String body, int boardId, boolean secret) {
+		articleRepository.writeArticle(actorId, title, body, boardId, secret);
 
 		int id = articleRepository.getLastInsertId();
 
@@ -61,8 +61,8 @@ public class ArticleService {
 		articleRepository.deleteArticle(id);
 	}
 
-	public ResultData<Article> modifyArticle(int id, String title, String body) {
-		articleRepository.modifyArticle(id, title, body);
+	public ResultData<Article> modifyArticle(int id, String title, String body, boolean secret) {
+		articleRepository.modifyArticle(id, title, body, secret);
 		Article article = getForPrintArticle(0, id);
 		return ResultData.from("S-1", Ut.f("%d번 게시물 수정 했습니다.", id), "article", article);
 	}

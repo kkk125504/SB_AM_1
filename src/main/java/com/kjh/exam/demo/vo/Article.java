@@ -18,7 +18,8 @@ public class Article {
 	private int hitCount;
 	private int goodReactionPoint;
 	private int badReactionPoint;
-
+	private boolean secret;
+	
 	private String extra__writer;
 	private boolean extra__actorCanDelete;
 	private boolean extra__actorCanModify;
@@ -31,4 +32,5 @@ public class Article {
 	public String getForPrintBody() {
 		return body.replace("\n", "<br>");
 	}
+
 }
