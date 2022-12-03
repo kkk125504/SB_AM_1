@@ -76,7 +76,7 @@ public class UsrArticleController {
 		
 		if(article.isSecret()) {
 			if(rq.getLoginedMemberId() != article.getMemberId()) {
-				return rq.jsHistoryBackOnView("🔒︎ 비밀글입니다.");
+				return rq.jsReplaceOnView("🔒︎ 비밀글입니다.", Ut.f("../article/list?boardId=%d", article.getBoardId()));
 			}
 		}
 		

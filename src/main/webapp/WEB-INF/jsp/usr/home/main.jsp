@@ -198,7 +198,6 @@ width: 911px;
 height: 415px;
 left: 800px;
 top: 267px;
-background-image: url("명상사진.jpg");
 }
 
 .main-box1-weather{
