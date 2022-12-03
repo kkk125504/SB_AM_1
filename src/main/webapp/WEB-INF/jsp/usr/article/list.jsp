@@ -9,6 +9,7 @@
 			<div>
 				총 게시물 갯수 : <span class="badge">${articlesCount }&nbsp;개</span>
 			</div>
+			<div><a class="ml-2 btn btn-ghost btn-active mx-1" href="../article/write">글쓰기</a></div>	
 			<div class="flex-grow"></div>
 			<form class="flex">
 				<input type="hidden" name="boardId" value="${board.id}" />
@@ -31,14 +32,13 @@
 			</form>
 		</div>
 		<div class="table-box-type-1 mt-2">
-			<div>총 게시물 : ${articlesCount}개</div>
 			<table border="2">
 				<col width ="80" />
 				<col width ="200"/>
 				<col />
 				<col width ="200"/>
 				<col width ="200"/>
-				<thead class="bg-gray-200">
+				<thead>
 					<tr>
 						<th>번호</th>
 						<th>날짜</th>

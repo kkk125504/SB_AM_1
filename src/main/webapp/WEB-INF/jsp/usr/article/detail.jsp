@@ -148,8 +148,7 @@
 			}
 			Reply__List();
 		}, 'json');	
-	}
-	
+	}	
 	$(function() {
 		// 실전코드
 		//ArticleDetail__increaseHitCount();
@@ -168,23 +167,23 @@
 				</colgroup>	
 				<tbody>		
 					<tr>
-						<td class="bg-gray-200">번호</td>
+						<th>번호</th>
 						<td><span class="badge">${article.id }</span></td>						
 					</tr>
 					<tr>
-						<td class="bg-gray-200">작성날짜</td>
+						<th>작성날짜</th>
 						<td>${article.regDate }</td>						
 					</tr>
 					<tr>
-						<td class="bg-gray-200">수정날짜</td>
+						<th>수정날짜</th>
 						<td>${article.updateDate }</td>						
 					</tr>
 					<tr>
-						<td class="bg-gray-200">제목</td>
+						<th>제목</th>
 						<td>${article.title }</td>						
 					</tr>
 					<tr>
-						<td class="bg-gray-200">내용</td>
+						<th>내용</th>
 						<td>
 							<div class="toast-ui-viewer">
 								<script type="text/x-template">${article.body}</script>
@@ -192,15 +191,15 @@
 						</td>				
 					</tr>
 					<tr>
-						<td class="bg-gray-200">작성자</td>
+						<th>작성자</th>
 						<td>${article.extra__writer }</td>						
 					</tr>
 					<tr>
-						<td class="bg-gray-200">조회수</td>
+						<th>조회수</th>
 						<td><span class="badge article-detail__hit-count">${article.hitCount }</span></td>						
 					</tr>
 					<tr>
-						<td class="bg-gray-200">추천</td>
+						<th>추천</th>
 						<td>				
 							<button class="btn btn-outline btn-xs good" onclick="goodReactionPoint()">좋아요 👍 : ${article.goodReactionPoint}</button>
 							<button class="btn btn-outline btn-xs bad" onclick="badReactionPoint()">싫어요 👎 : ${article.badReactionPoint}</button>
@@ -230,7 +229,7 @@
 		<h2>댓글 작성</h2>
 		<c:if test="${rq.logined }">
 			<form class="table-box-type-1" onsubmit="return false;" name="replyWriteForm">
-				<table class="table table-zebra w-full">
+				<table class="table w-full">
 					<colgroup>
 						<col width="200" />
 					</colgroup>

@@ -12,21 +12,21 @@
 				</colgroup>					
 						<tbody>						
 							<tr>
-								<td>아이디 </td>
+								<th>아이디 </th>
 								<td><input type="text" name="loginId" autocomplete="off" placeholder="아이디를 입력해주세요." /></td>
 							</tr>
 							<tr>
-								<td>비밀번호 </td>
+								<th>비밀번호 </th>
 								<td><input type="password" name="loginPw" autocomplete="off" placeholder="비밀번호를 입력해주세요." /></td>
 							</tr>
 							<tr>
-								<td></td>
+								<th></th>
 								<td>
 									<button class="btn btn-active btn-ghost" type="submit">로그인</button>
 								</td>
 							</tr>
 							<tr>
-								<td></td>
+								<th></th>
 								<td>
 									<a href="${rq.findLoginIdUri }" class="btn btn-active btn-ghost" type="submit">아이디 찾기</a>
 									<a href="${rq.findLoginPwUri }" class="btn btn-active btn-ghost" type="submit">비밀번호 찾기</a>
