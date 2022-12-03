@@ -28,6 +28,7 @@
 			<form class="table-box-type-1" method="post" action="doModify" onsubmit="ArticleModify__submit(this); return false;">
 				<input type="hidden" name="id" value="${article.id }"/>
 				<input type="hidden" name="body" />
+				<input type="hidden" name="replaceUri" value="${param.replaceUri }"/>
 				<table>
 					<colgroup>
 						<col width="200" />

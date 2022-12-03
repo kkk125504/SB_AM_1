@@ -212,7 +212,7 @@
 			</table>
 			<div class= "btns flex justify-end">
 				<c:if test ="${article.extra__actorCanModify}">
-					<a class ="btn-text-link btn btn-active btn-ghost mx-4" href="modify?id=${article.id }">수정</a>				
+					<a class ="btn-text-link btn btn-active btn-ghost mx-4" href="modify?id=${article.id }&replaceUri=${rq.encodedCurrentUri}">수정</a>				
 				</c:if>
 				<c:if test ="${article.extra__actorCanDelete}">
 					<a class ="btn-text-link btn btn-active btn-ghost" onclick="if(confirm('삭제하시겠습니까?') == false) return false;" href="doDelete?id=${article.id }">삭제</a>
