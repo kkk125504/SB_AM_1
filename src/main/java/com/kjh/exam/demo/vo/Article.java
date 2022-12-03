@@ -22,7 +22,8 @@ public class Article {
 	private String extra__writer;
 	private boolean extra__actorCanDelete;
 	private boolean extra__actorCanModify;
-
+	private int extra__replyCount;
+	
 	public String getForPrintType1RegDate() {
 		return regDate.substring(2, 16).replace(" ", "</br>");
 	}

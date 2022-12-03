@@ -21,10 +21,14 @@
 	</select>
 
 	<select id="getForPrintArticles" resultType="Article">		
-		SELECT A.*, M.nickname AS extra__writer 
+		SELECT A.*, M.nickname AS extra__writer,
+		COUNT(RP.id) AS extra__replyCount 
 		FROM article AS A
 		INNER JOIN `member` AS M
 		ON A.memberId = M.id
+		LEFT JOIN reply AS RP
+		ON A.id = RP.relId
+		AND RP.relTypeCode = 'article'
 		WHERE 1
 		<if test="boardId != 0">
 		AND A.boardId = #{boardId}
@@ -39,12 +43,13 @@
 				</when>
 				<otherwise>
 		    	AND (
-		    		title LIKE CONCAT('%',#{searchKeyword},'%') OR
-		    		body LIKE CONCAT('%',#{searchKeyword},'%')
+		    		A.title LIKE CONCAT('%',#{searchKeyword},'%') OR
+		    		A.body LIKE CONCAT('%',#{searchKeyword},'%')
 		    		)
 		    	</otherwise>  	
 			</choose>
 		</if>		
+		GROUP BY A.id
 		ORDER BY A.id DESC
 		<if test="limitTake != -1">
 		LIMIT #{limitStart}, #{limitTake}
@@ -149,6 +154,22 @@
 	<select id="getArticle" resultType="Article">
 		SELECT * FROM article
 		WHERE id = #{relId}
+	</select>
+	
+	<select id="getForPrintBestArticles" resultType="Article">
+		SELECT A.*, M.nickname AS extra__writer
+		, COUNT(RP.id) AS extra__replyCount
+		FROM article AS A
+		INNER JOIN `member` AS M
+		ON A.memberId = M.id 
+		INNER JOIN reply AS RP
+		ON A.id = RP.relId
+		AND RP.relTypeCode = 'article'
+		WHERE A.boardId = #{boardId}
+		AND A.goodReactionPoint > 0	
+		GROUP BY A.id		
+		ORDER BY A.goodReactionPoint DESC
+		LIMIT 0,3
 	</select>
 			
 </mapper>

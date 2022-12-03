@@ -43,11 +43,32 @@
 					</tr>
 				</thead>
 				<tbody>
+					<c:if test="${board.id == 1 }">
+						<c:forEach var="article" items="${bestArticles}">
+							<tr class="bg-red-50 text-red-500">
+								<td><div class="badge badge-secondary">추천</div></td>
+								<td>${article.forPrintType1RegDate}</td>
+								<td>
+									<a class="hover:underline block w-full truncate" href="${rq.getArticleDetailUriFromArticleList(article)}">
+										${article.title}&nbsp;&nbsp;<span class="text-red-500">[${article.extra__replyCount}]</span>												
+									</a>
+								</td>
+								<td>${article.extra__writer}</td>
+								<td>${article.hitCount}</td>
+							</tr>
+						</c:forEach>							
+					</c:if>
 					<c:forEach var="article" items="${articles}">
 						<tr>
 							<td>${article.id }</td>
 							<td>${article.forPrintType1RegDate}</td>
-							<td><a href="${rq.getArticleDetailUriFromArticleList(article)}">${article.title}</a></td>
+							<td>
+								<a class="hover:underline block w-full truncate" href="${rq.getArticleDetailUriFromArticleList(article)}">${article.title}
+									<c:if test="${article.extra__replyCount > 0}">
+										&nbsp;&nbsp;<span class="text-red-500">[${article.extra__replyCount}]</span>
+									</c:if>
+								</a>
+							</td>
 							<td>${article.extra__writer}</td>
 							<td>${article.hitCount}</td>
 						</tr>

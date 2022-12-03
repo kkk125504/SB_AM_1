@@ -42,4 +42,6 @@ public interface ArticleRepository {
 
 	public Article getArticle(int relId);
 
+	public List<Article> getForPrintBestArticles(int boardId);
+
 }

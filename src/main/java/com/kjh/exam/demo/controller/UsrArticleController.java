@@ -61,15 +61,17 @@ public class UsrArticleController {
 	public String showDetail(Model model, int id) {
 		boolean actorCanMakeReaction = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article",
 				id);
-		
-		boolean isSelectedGoodReactionPoint = reactionPointService.isSelectedGoodReactionPoint(rq.getLoginedMemberId(),"article",id);
-		boolean isSelectedBadReactionPoint = reactionPointService.isSelectedBadReactionPoint(rq.getLoginedMemberId(),"article",id);
-		
-		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMember(),"article",id);
-		model.addAttribute("replies",replies);
-		
+
+		boolean isSelectedGoodReactionPoint = reactionPointService.isSelectedGoodReactionPoint(rq.getLoginedMemberId(),
+				"article", id);
+		boolean isSelectedBadReactionPoint = reactionPointService.isSelectedBadReactionPoint(rq.getLoginedMemberId(),
+				"article", id);
+
+		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMember(), "article", id);
+		model.addAttribute("replies", replies);
+
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
-		
+
 		model.addAttribute("isSelectedGoodReactionPoint", isSelectedGoodReactionPoint);
 		model.addAttribute("isSelectedBadReactionPoint", isSelectedBadReactionPoint);
 		model.addAttribute("actorCanMakeReaction", actorCanMakeReaction);
@@ -80,18 +82,24 @@ public class UsrArticleController {
 	@RequestMapping("usr/article/list")
 	public String showList(Model model, @RequestParam(defaultValue = "1") int boardId,
 			@RequestParam(defaultValue = "title,body") String searchKeywordType,
-			@RequestParam(defaultValue = "") String searchKeyword, @RequestParam(defaultValue = "1") int page) {
+			@RequestParam(defaultValue = "") String searchKeyword, @RequestParam(defaultValue = "1") int page,
+			@RequestParam(defaultValue = "10") int itemsInAPage) {
 
 		Board board = boardService.getBoardById(boardId);
 		if (board == null) {
 			return rq.jsHistoryBackOnView("존재하지 않는 게시판 입니다.");
 		}
 
-		int itemsInAPage = 10;
 		int articlesCount = articleService.getArticlesCount(boardId, searchKeywordType, searchKeyword);
 		int pagesCount = (int) (Math.ceil((double) articlesCount / itemsInAPage));
 		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(), boardId, page,
 				itemsInAPage, searchKeywordType, searchKeyword);
+		
+		List<Article> bestArticles = articleService.getForPrintBestArticles(boardId);
+		
+		if(bestArticles.isEmpty() == false) {
+			model.addAttribute("bestArticles", bestArticles);
+		}
 		model.addAttribute("articles", articles);
 		model.addAttribute("board", board);
 		model.addAttribute("page", page);

@@ -154,4 +154,9 @@ public class ArticleService {
 
 		return articleRepository.getArticle(relId);
 	}
+
+	public List<Article> getForPrintBestArticles(int boardId) {
+		
+		return articleRepository.getForPrintBestArticles(boardId);
+	}
 }

@@ -69,34 +69,34 @@ public class UsrReplyController {
 		return deleteReplyRd;
 	}
 
-	@RequestMapping("/usr/reply/modify")
-	public String modify(Model model, int id) {
-		if (Ut.empty(id)) {
-			return rq.jsHistoryBackOnView("id가 없습니다");
-		}
-		Reply reply = replyService.getForPrintReply(rq.getLoginedMember(), id);
-
-		if (reply == null) {
-			return rq.jsHistoryBackOnView(Ut.f("%d번 댓글은 존재하지 않습니다", id));
-		}
-
-		if (reply.isExtra__actorCanModify() == false) {
-			return rq.jsHistoryBack("해당 댓글을 수정할 권한이 없습니다");
-		}
-
-		String relDataTitle = null;
-
-		switch (reply.getRelTypeCode()) {
-		case "article":
-			Article article = articleService.getArticle(reply.getRelId());
-			relDataTitle = article.getTitle();
-			break;
-		}
-		model.addAttribute("reply", reply);
-		model.addAttribute("relDataTitle", relDataTitle);
-
-		return "usr/reply/modify";
-	}
+//	@RequestMapping("/usr/reply/modify")
+//	public String modify(Model model, int id) {
+//		if (Ut.empty(id)) {
+//			return rq.jsHistoryBackOnView("id가 없습니다");
+//		}
+//		Reply reply = replyService.getForPrintReply(rq.getLoginedMember(), id);
+//
+//		if (reply == null) {
+//			return rq.jsHistoryBackOnView(Ut.f("%d번 댓글은 존재하지 않습니다", id));
+//		}
+//
+//		if (reply.isExtra__actorCanModify() == false) {
+//			return rq.jsHistoryBack("해당 댓글을 수정할 권한이 없습니다");
+//		}
+//
+//		String relDataTitle = null;
+//
+//		switch (reply.getRelTypeCode()) {
+//		case "article":
+//			Article article = articleService.getArticle(reply.getRelId());
+//			relDataTitle = article.getTitle();
+//			break;
+//		}
+//		model.addAttribute("reply", reply);
+//		model.addAttribute("relDataTitle", relDataTitle);
+//
+//		return "usr/reply/modify";
+//	}
 
 	@RequestMapping("/usr/reply/doModify")
 	@ResponseBody
