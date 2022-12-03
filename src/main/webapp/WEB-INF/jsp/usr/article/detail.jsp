@@ -9,6 +9,7 @@
 </script>
 
 <script>
+	//조회수 증가
 	function ArticleDetail__increaseHitCount() {
 		const localStorageKey = 'article__' + params.id + '__alreadyView';
 		
@@ -25,6 +26,7 @@
 		}, 'json');
 	}
 	
+	//좋아요 버튼 클릭시 실행
 	function goodReactionPoint() {
 		if(${rq.isLogined()==false}){
 			alert('로그인 후 이용 가능합니다.');
@@ -52,6 +54,7 @@
 		}, 'json');		
 	}
 	
+	//싫어요 버튼 클릭시 실행
 	function badReactionPoint() {
 		if(${rq.isLogined()==false}){
 			alert('로그인 후 이용 가능합니다.');
@@ -78,7 +81,8 @@
 			
 		}, 'json');		
 	}
-		
+	
+	//좋아요, 싫어요 버튼의 배경색 추가
 	function selectedReactionPoint() {
 		if(${isSelectedGoodReactionPoint}){ 
 			$('.good').removeClass('btn-outline');
@@ -88,6 +92,7 @@
 		}
 	}
 	
+	//댓글 작성
 	var replyWrite__submitDone = false;
 	function ReplyWrite__submitForm(form) {
 		
@@ -217,51 +222,16 @@
 			</form>
 		</c:if>
 		<c:if test="${rq.notLogined}">
-			<a class="btn-text-link btn btn-active btn-ghost" href="/usr/member/login">로그인</a> 후 이용해주세요
+			<a class="btn-text-link btn btn-active btn-ghost" href="${rq.loginUri }">로그인</a> 후 이용해주세요
 		</c:if>
 	</div>
 </section>
 <section class="mt-5">
 	<div class="container mx-auto px-3 mb-8">
-		<h2>댓글 리스트(${replies.size() })</h2>
-		<table class="table table-fixed w-full">
-			<colgroup>
-				<col width="150" />
-				<col width="100" />
-				<col width="100" />
-				<col width="250" />
-				<col width="80" />
-			</colgroup>
-			<thead>
-				<tr>
-					<th>날짜</th>
-					<th>작성자</th>
-					<th>추천</th>
-					<th>내용</th>
-					<th>비고</th>
-				</tr>
-			</thead>
-
-			<tbody>
-				<c:forEach var="reply" items="${replies }">
-					<tr class="hover">
-						<td>${reply.regDate}</td>
-						<td>${reply.extra__writerName}</td>
-						<td>${reply.goodReactionPoint}</td>
-						<td class="text-left">${reply.getForPrintBody()}</td>
-						<td>
-							<c:if test="${reply.extra__actorCanModify }">
-								<a class="btn btn-ghost" href="../reply/modify?id=${reply.id }&replaceUri=${rq.encodedCurrentUri}">수정</a>
-							</c:if>
-							<c:if test="${reply.extra__actorCanDelete }">
-								<a class="btn btn-ghost" onclick="if(confirm('삭제 하시겠습니까?') == false) return false;"
-									href="../reply/doDelete?id=${reply.id }&replaceUri=${rq.encodedCurrentUri}">삭제</a>
-							</c:if>
-						</td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+		<h2>댓글 리스트</h2>
+		<div class="replyList">
+<!-- ajax로 리스팅 -->	
+		</div>
 	</div>
 </section>
 <%@ include file="../common/foot.jspf" %>
