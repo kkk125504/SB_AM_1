@@ -30,8 +30,6 @@ public class UsrArticleController {
 	@Autowired
 	private ReactionPointService reactionPointService;
 	@Autowired
-	private ReplyService replyService;
-	@Autowired
 	private Rq rq;
 
 	// 액션 메소드

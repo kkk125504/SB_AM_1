@@ -100,33 +100,26 @@ public class UsrReplyController {
 
 	@RequestMapping("/usr/reply/doModify")
 	@ResponseBody
-	public String doModify(int id, String body, String replaceUri) {
+	public ResultData doModify(int id, String body) {
 		if (Ut.empty(id)) {
-			return rq.jsHistoryBack("id가 없습니다");
+			return ResultData.from("F-1", "id가 없습니다");		
 		}
 		if (Ut.empty(body)) {
-			return rq.jsHistoryBack("내용을 입력해주세요");
+			return ResultData.from("F-2", "내용을 입력해주세요");	
 		}
 		Reply reply = replyService.getForPrintReply(rq.getLoginedMember(), id);
 
 		if (reply == null) {
-			return rq.jsHistoryBack(Ut.f("%d번 댓글은 존재하지 않습니다", id));
+			return ResultData.from("F-3", Ut.f("%d번 댓글은 존재하지 않습니다", id));	
 		}
 
 		if (reply.isExtra__actorCanModify() == false) {
-			return rq.jsHistoryBack("해당 댓글을 삭제할 권한이 없습니다");
+			return ResultData.from("F-4", "해당 댓글을 삭제할 권한이 없습니다.");	
 		}
 
 		ResultData modifyReplyRd = replyService.modifyReply(id, body);
 
-		if (Ut.empty(replaceUri)) {
-			switch (reply.getRelTypeCode()) {
-			case "article":
-				replaceUri = Ut.f("../article/detail?id=%d", reply.getRelId());
-				break;
-			}
-		}
-		return rq.jsReplace(modifyReplyRd.getMsg(), replaceUri);
+		return modifyReplyRd;
 	}
 
 	@RequestMapping("/usr/reply/getReplies")

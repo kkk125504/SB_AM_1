@@ -48,7 +48,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:if test="${board.id == 1 }">
+					<c:if test="${board.id != 3 }">
 						<c:forEach var="article" items="${bestArticles}">
 							<tr class="bg-red-50 text-red-500">
 								<td><div class="badge badge-secondary">추천</div></td>

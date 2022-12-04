@@ -95,7 +95,8 @@
 	//댓글 리스트 출력
 	var replyIds = [];
 	var index = 0;
-	function Reply__List() {	
+	function Reply__List() {
+		  var replyListContent = "";
 	      $.ajax({
 	        type: "GET",
 	        url: "../reply/getReplies",
@@ -105,24 +106,31 @@
 	        error: function() {
 	          console.log('통신실패!!');
 	        },
-	        success: function(data) {
-	        	var replyListContent = "";
+	        success: function(data) {	        	
 	 			if(data.data1 == null){
-	 				replyListContent += "댓글이 존재 하지 않습니다.";	 				
+	 				replyListContent += "";
+ 				    $('.replyList').html(replyListContent);
+ 				    return;
 	 			}else{
 	 			$(data.data1).each(function(){
 	 				var loginedMemberId = ${rq.loginedMemberId};
-	 				var replyMemberId= this.memberId;				
+	 				var replyMemberId= this.memberId;
+	 				var params__reply = '\''+this.id+'/'+this.regDate+'/'+this.body+'/'+this.extra__writerName+'\'';	
 	 				replyListContent += '<div class="divider"></div>';
-	 				replyListContent += '<div class= "reply'+ this.id+'">';
-	 				replyListContent += '<div><span>'+this.extra__writerName +'</span></div>';
-	 				replyListContent += '<div class="bg-base-300 rounded-box "><span class="mx-8">';				
-	 				replyListContent += this.body+'</span></div>';							
-	  				if(loginedMemberId == replyMemberId){
-	  					replyListContent +='<button class="btn btn-outline btn-xs" onclick="Reply__ModifyForm()">수정</button>';
-	  					replyListContent +='<button class="btn btn-outline btn-xs" onclick="Reply__Delete('+ this.id +')">삭제</button>';
+	 				replyListContent += '<div id = "reply'+ this.id +'">';
+	 				replyListContent += '<div><span class="font-extrabold">';
+	 				replyListContent += this.extra__writerName +'</span>';									
+	 				
+	 				//댓글 삭제, 수정버튼
+	 				if(loginedMemberId == replyMemberId){
+	 					replyListContent += '<button class="ml-4" onclick="Reply__ModifyForm('+params__reply+');">수정</button>';			   
+	 					replyListContent += '<button class="ml-2" onclick="Reply__delete('+this.id+');">삭제</button>';
 	 				}
-	  				replyListContent += '</div>';	  				      
+	 				
+	  				replyListContent += '</div>';	  	  				
+	  				replyListContent += '<div><span class="font-extrabold">'+this.regDate +'</span></div>';
+	  				replyListContent += '<div><span class="input input-bordered w-full max-w-xs">'+this.body+'</span></div>';  
+	  				replyListContent += '</div>';
 	     	 		});
 	 			}
 	 			$('.replyList').html(replyListContent); 	 			
@@ -150,7 +158,57 @@
 			}
 			Reply__List();			
 		}, 'json');	
-	}	
+	}
+	//댓글 수정 폼
+	function Reply__ModifyForm(params__reply) {	 	
+		   var params__replySplit = params__reply.split('/');
+		   var replyId = params__replySplit[0];
+		   var regDate = params__replySplit[1];
+		   var body = params__replySplit[2];
+		   var replyWriter = params__replySplit[3];
+		   var replyModifyContent= '';
+		   replyModifyContent += '<form>'
+		   replyModifyContent += '<div>';
+		   replyModifyContent += '<span class="font-extrabold">';
+		   replyModifyContent += replyWriter +'</span>';		  				 		 		 
+		   replyModifyContent += '</div>';
+		   replyModifyContent += '<div><span class="font-extrabold">'+ regDate +'</span></div>';
+		   replyModifyContent += '<div>';
+		   replyModifyContent += '<input type="hidden" name="id" value="'+replyId+'"/>';
+		   replyModifyContent += '<input class="input input-bordered w-full max-w-xs" name="body" value="'+body+'"/>';
+		   replyModifyContent += '<button type="button" onclick="Reply__Modify(form);">수정</button>';
+		   replyModifyContent += '<button type="button" onclick="Reply__List();">취소</button>';
+		   replyModifyContent += '</form>';
+		   
+		   $('#reply'+replyId).html(replyModifyContent);   
+	 	}
+	
+	// 댓글 수정
+	function Reply__Modify(form) {					
+		$.get('../reply/doModify', {
+			id : form.id.value,
+			body : form.body.value
+		}, function(data) {
+			if(data.fail){
+				alert(data.data.msg);
+				return;
+			}
+ 			Reply__List();
+		}, 'json');
+		
+	}
+	
+	//댓글 삭제
+	function Reply__delete(id) {
+	  $.get('../reply/doDelete', {
+	  id : id,
+	  ajaxMode : 'Y'
+	  }, function(data) { 
+		  Reply__List();
+	  }, 'json');
+	 
+	}
+	
 	$(function() {
 		// 실전코드
 		//ArticleDetail__increaseHitCount();
@@ -158,7 +216,6 @@
 		setTimeout(ArticleDetail__increaseHitCount, 2000);
 		selectedReactionPoint();
 		Reply__List();
-		ReOfRe__list();
 	})
 </script>	
 <section class="mt-8 text-xl">
