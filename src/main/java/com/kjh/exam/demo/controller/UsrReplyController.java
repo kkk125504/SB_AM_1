@@ -49,23 +49,31 @@ public class UsrReplyController {
 
 	@RequestMapping("/usr/reply/doDelete")
 	@ResponseBody
-	public ResultData doDelete(int id) {
+	public ResultData doDelete(int id, String relTypeCode) {
 		if (Ut.empty(id)) {
 			return ResultData.from("F-1", "id가 없습니다");
+		}
+		
+		if (Ut.empty(relTypeCode)) {
+			return ResultData.from("F-2", "relTypeCode가 없습니다");
 		}
 
 		Reply reply = replyService.getForPrintReply(rq.getLoginedMember(), id);
 
 		if (reply == null) {
-			return ResultData.from("F-2", Ut.f("%d번 댓글은 존재하지 않습니다", id));
+			return ResultData.from("F-3", Ut.f("%d번 댓글은 존재하지 않습니다", id));
 		}
 
 		if (reply.isExtra__actorCanDelete() == false) {
-			return ResultData.from("F-3", "해당 댓글을 삭제할 권한이 없습니다");
+			return ResultData.from("F-4", "해당 댓글을 삭제할 권한이 없습니다");
 		}
-
+		
+		if(relTypeCode.equals("article")) {
+			ResultData deleteReplyOfReplyRd = replyService.deleteReplyOfReply(id);
+		}
+		
 		ResultData deleteReplyRd = replyService.deleteReply(id);
-
+		
 		return deleteReplyRd;
 	}
 

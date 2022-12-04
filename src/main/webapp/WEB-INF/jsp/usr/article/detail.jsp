@@ -91,13 +91,17 @@
 			$('.bad').removeClass('btn-outline');
 		}
 	}
+</script>
 	
-	//댓글 리스트 출력
+<script>
+	//댓글리스트 출력	
 	var replyIds = [];
 	var index = 0;
 	function Reply__List() {
-		  var replyListContent = "";
-	      $.ajax({
+	 replyIds = [];
+	 index = 0;
+ 	 var replyListContent = "";
+	  $.ajax({
 	        type: "GET",
 	        url: "../reply/getReplies",
 	        dataType: "json",
@@ -106,84 +110,176 @@
 	        error: function() {
 	          console.log('통신실패!!');
 	        },
-	        success: function(data) {	        	
-	 			if(data.data1 == null){
-	 				replyListContent += "";
- 				    $('.replyList').html(replyListContent);
- 				    return;
-	 			}else{
-	 			$(data.data1).each(function(){
-	 				var loginedMemberId = ${rq.loginedMemberId};
-	 				var replyMemberId= this.memberId;
-	 				var params__reply = '\''+this.id+'/'+this.regDate+'/'+this.body+'/'+this.extra__writerName+'\'';	
-	 				replyListContent += '<div class="divider"></div>';
-	 				replyListContent += '<div id = "reply'+ this.id +'">';
-	 				replyListContent += '<div><span class="font-extrabold">';
-	 				replyListContent += this.extra__writerName +'</span>';									
-	 				
-	 				//댓글 삭제, 수정버튼
-	 				if(loginedMemberId == replyMemberId){
-	 					replyListContent += '<button class="ml-4" onclick="Reply__ModifyForm('+params__reply+');">수정</button>';			   
-	 					replyListContent += '<button class="ml-2" onclick="Reply__delete('+this.id+');">삭제</button>';
-	 				}
-	 				
-	  				replyListContent += '</div>';	  	  				
-	  				replyListContent += '<div><span class="font-extrabold">'+this.regDate +'</span></div>';
-	  				replyListContent += '<div><span class="input input-bordered w-full max-w-xs">'+this.body+'</span></div>';  
-	  				replyListContent += '</div>';
-	     	 		});
-	 			}
-	 			$('.replyList').html(replyListContent); 	 			
-			}	        
-	    })
+	        success: function(data) {	        
+			  if(data.data1 == null){
+			  replyListContent += "";
+			  $('.replyList').html(replyContent);
+			  return;
+  			  }
+			  
+ 			 $(data.data1).each(function(){
+			  var loginedMemberId = ${rq.loginedMemberId};
+			  var replyMemberId= this.memberId;
+			  var params__reply = '\''+this.id+'/'+this.regDate+'/'+this.body+'/'+this.extra__writerName+'/'+this.relTypeCode+'\'';			
+			  replyIds[index] = this.id;
+  			  index++;
+  			  replyListContent += '<div class="divider"></div>';
+  			  replyListContent += '<div id = "reply'+ this.id +'">';
+  			  replyListContent += '<div><span class="font-extrabold">';
+  			  replyListContent += this.extra__writerName +'</span>';
+			  
+			  //댓글 삭제, 수정버튼
+			  if(loginedMemberId == replyMemberId){
+				  replyListContent += '<button class="ml-4" onclick="Reply__ModifyForm('+params__reply+');">수정</button>';			   
+				  replyListContent += '<button class="ml-2" onclick="Reply__Delete('+params__reply+');">삭제</button>';
+			  }
+			  //답글쓰기 버튼 노출
+			  if(${rq.isLogined()}){
+				  replyListContent += '<button class="ml-20" onclick="ReOfRe__WriteForm('+this.id+')">답글쓰기</button>';
+			  }
+			  
+			  replyListContent += '</div>';
+			  replyListContent += '<div><span class="font-extrabold">'+this.regDate +'</span></div>';
+	   		  replyListContent += '<div><span class="input input-bordered w-full max-w-xs">';  
+			  replyListContent += this.body+'</span></div>';  
+			  replyListContent += '</div>';
+   			  
+   			  replyListContent += '<div id="ReOfRe__WriteForm'+this.id+'"></div>';
+			  
+			  // 댓글의 댓글 리스트
+			  replyListContent += '<div id= re'+this.id+'></div>';
+			  });  
+			  $('.replyList').html(replyListContent);
+			 }
+	    });
 	}
 	
-	//댓글 작성
-	function Reply__Write(form) {
-		var replyBody = form.replyBody.value;
-		
-		if(replyBody == 0){
-			alert('댓글 내용을 입력해 주세요.');
-			return;
-		}
-		
-		$.get('../reply/doWrite', {
-			relId : params.id,
-			relTypeCode : 'article',
-			body : replyBody
-		}, function(data) {
-			if(data.fail){
-				alert(data.data.msg);
-				return;
-			}
-			Reply__List();			
-		}, 'json');	
+	//댓글의 답글 리스팅
+	function ReOfRe__List(){
+	  if(replyIds.length > 0){
+	  for(let i  = 0; i < replyIds.length; i++){	
+	  var replyId = replyIds[i];
+	  var rorListContent = "";	  
+    	$.ajax({
+          type: "GET",
+          url: "../reply/getReplies",
+          dataType: "json",
+      	  async : false,
+      	  data : { "relId" : replyId , "relTypeCode" : "reply"},
+          error: function() {
+            console.log('통신실패!!');
+          },
+          success: function(data) {
+          	
+          	if(data.data1 == null){
+            return;
+          	}
+        
+        	$(data.data1).each(function(){
+        	var loginedMemberId = ${rq.loginedMemberId};
+ 			var replyMemberId= this.memberId;
+        	var params__reply = '\''+this.id+'/'+this.regDate+'/'+this.body+'/'+this.extra__writerName+'/'+this.relTypeCode+'\'';		
+ 			
+ 			rorListContent += '<div class="ml-12 mt-2" id = "reply'+ this.id +'">'
+ 			rorListContent += '<div><span class="font-extrabold">↳&nbsp;&nbsp;'
+ 			rorListContent += this.extra__writerName +'</span>';
+         
+          if(loginedMemberId == replyMemberId){ 			  
+        	  rorListContent += '<button class="ml-2" onclick="Reply__Delete('+params__reply+');">삭제</button>';
+		  }
+          rorListContent += '</div>';          	
+          rorListContent += '<div><span class="mx-8">';  
+          rorListContent += this.body+'</span></div>';
+          rorListContent += '</div>';           
+          });
+        	
+          $('#re'+replyId).html(rorListContent);   
+          }
+ 		});
+ 	 }
+   }  
+}
+  	//댓글 작성
+	function Reply__Write() {  
+	  $.get('../reply/doWrite', {
+	  relId : params.id,
+	  relTypeCode : $('input[name=relTypeCode]').val(),
+	  body : $('textarea[name=replyBody]').val()
+	  }, function(data) {
+	  if(data.fail){
+	  	alert(data.msg);
+	  	return;
+	  	}	  
+	  }, 'json');	
+	  Reply__List();
+	  ReOfRe__List();
 	}
-	//댓글 수정 폼
-	function Reply__ModifyForm(params__reply) {	 	
-		   var params__replySplit = params__reply.split('/');
-		   var replyId = params__replySplit[0];
-		   var regDate = params__replySplit[1];
-		   var body = params__replySplit[2];
-		   var replyWriter = params__replySplit[3];
-		   var replyModifyContent= '';
-		   replyModifyContent += '<form>'
-		   replyModifyContent += '<div>';
-		   replyModifyContent += '<span class="font-extrabold">';
-		   replyModifyContent += replyWriter +'</span>';		  				 		 		 
-		   replyModifyContent += '</div>';
-		   replyModifyContent += '<div><span class="font-extrabold">'+ regDate +'</span></div>';
-		   replyModifyContent += '<div>';
-		   replyModifyContent += '<input type="hidden" name="id" value="'+replyId+'"/>';
-		   replyModifyContent += '<input class="input input-bordered w-full max-w-xs" name="body" value="'+body+'"/>';
-		   replyModifyContent += '<button type="button" onclick="Reply__Modify(form);">수정</button>';
-		   replyModifyContent += '<button type="button" onclick="Reply__List();">취소</button>';
-		   replyModifyContent += '</form>';
-		   
-		   $('#reply'+replyId).html(replyModifyContent);   
-	 	}
+  	
+	//답글쓰기 
+	function ReOfRe__Write(replyId) {
+	  $.get('../reply/doWrite', {
+	  relId : replyId,
+	  relTypeCode : 'reply',
+	  body : $('input[name=ReOfRe'+replyId+']').val()
+	  }, function(data) {
+	  if(data.fail){
+	  alert(data.msg);
+	  return;
+	  }
+	  Reply__List();
+	  ReOfRe__List();
+	  }, 'json');	
+	}
 	
-	// 댓글 수정
+	// 답글쓰기 폼
+	function ReOfRe__WriteForm(replyId) {
+  		var content = '<div>답글쓰기 : <input name="ReOfRe'+replyId+'" type="text" class="input input-bordered input-lg mt-2"/>';
+  		content += '<button type="button" class="mx-4" onclick="ReOfRe__Write('+replyId+')">작성</button>';
+  		content += '<button type="button" onclick="Reply__List(); ReOfRe__List();">취소</button></div>';
+  		$('#ReOfRe__WriteForm'+replyId).html(content);
+	}
+	
+  	// 댓글 수정 폼
+ 	function Reply__ModifyForm(params__reply) {	 	
+	   var params__replySplit = params__reply.split('/');
+	   var replyId = params__replySplit[0];
+	   var regDate = params__replySplit[1];
+	   var body = params__replySplit[2];
+	   var replyWriter = params__replySplit[3];
+	   var replyModifyContent= '';
+	   replyModifyContent += '<form>'
+	   replyModifyContent += '<div>';
+	   replyModifyContent += '<span class="font-extrabold">';
+	   replyModifyContent += replyWriter +'</span>';		  				 		 		 
+	   replyModifyContent += '</div>';
+	   replyModifyContent += '<div><span class="font-extrabold">'+ regDate +'</span></div>';
+	   replyModifyContent += '<div>';
+	   replyModifyContent += '<input type="hidden" name="id" value="'+replyId+'"/>';
+	   replyModifyContent += '<input class="input input-bordered w-full max-w-xs" name="body" value="'+body+'"/>';
+	   replyModifyContent += '<button type="button" onclick="Reply__Modify(form);">수정</button>';
+	   replyModifyContent += '<button type="button" onclick="Reply__List(); ReOfRe__List();">취소</button>';
+	   replyModifyContent += '</form>';
+	   
+	   $('#reply'+replyId).html(replyModifyContent);   
+ 	}
+	
+	//댓글,답글쓰기 삭제
+	function Reply__Delete(params__reply) {
+	 var params__replySplit = params__reply.split('/');
+	 var id = params__replySplit[0];
+	 var relTypeCode = params__replySplit[4];
+	  $.get('../reply/doDelete', {
+	  id : id,
+	  relTypeCode : relTypeCode,
+	  ajaxMode : 'Y'
+	  }, function(data) { 
+		  Reply__List();
+		  ReOfRe__List();
+	  }, 'json');
+	 
+	}
+		
+	// 댓글 수정 폼
 	function Reply__Modify(form) {					
 		$.get('../reply/doModify', {
 			id : form.id.value,
@@ -193,22 +289,11 @@
 				alert(data.data.msg);
 				return;
 			}
- 			Reply__List();
-		}, 'json');
-		
+			Reply__List();
+			ReOfRe__List();
+		}, 'json');	
 	}
-	
-	//댓글 삭제
-	function Reply__delete(id) {
-	  $.get('../reply/doDelete', {
-	  id : id,
-	  ajaxMode : 'Y'
-	  }, function(data) { 
-		  Reply__List();
-	  }, 'json');
-	 
-	}
-	
+					
 	$(function() {
 		// 실전코드
 		//ArticleDetail__increaseHitCount();
@@ -216,6 +301,7 @@
 		setTimeout(ArticleDetail__increaseHitCount, 2000);
 		selectedReactionPoint();
 		Reply__List();
+		ReOfRe__List();
 	})
 </script>	
 <section class="mt-8 text-xl">
@@ -289,6 +375,8 @@
 		<h2>댓글 작성</h2>
 		<c:if test="${rq.logined }">
 			<form class="table-box-type-1" onsubmit="return false;" name="replyWriteForm">
+				<input type="hidden" name="relTypeCode" value="article" />
+				<input type="hidden" name="relId" value="${param.id}" />
 				<table class="table w-full">
 					<colgroup>
 						<col width="200" />
@@ -309,7 +397,7 @@
 						<tr>
 							<th></th>
 							<td>
-								<button class="btn btn-active btn-ghost" type="button" onclick="Reply__Write(form);">댓글작성</button>
+								<button class="btn btn-active btn-ghost" type="button" onclick="Reply__Write();">댓글작성</button>
 							</td>
 						</tr>
 					</tbody>	

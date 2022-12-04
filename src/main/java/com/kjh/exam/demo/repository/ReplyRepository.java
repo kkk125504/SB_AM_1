@@ -68,5 +68,12 @@ public interface ReplyRepository {
 			WHERE id= #{id}
 			""")
 	void modifyReply(int id, String body);
+	
+	@Delete("""
+			DELETE FROM reply
+			WHERE relId = #{id}
+			AND relTypeCode = 'reply'
+			""")
+	void deleteReplyOfReply(int id);
 
 }
