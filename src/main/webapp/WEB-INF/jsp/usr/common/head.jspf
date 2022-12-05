@@ -108,6 +108,19 @@ text-align: center;
 color: #000000;
 }
 
+.menu-item7{
+position: absolute;
+width: 174px;
+height: 25px;
+left: 1552px;
+top: 78px;
+font-size: 20px;
+line-height: 27px;
+text-align: center;
+
+color: #000000;
+}
+
 .height{
 height : 200px;
 width : 100px;
@@ -149,7 +162,19 @@ top: 91px;
 border-radius : 100%;
 background: #202020;
 }
+.pageTitle{
+position: absolute;
+width: 399px;
+height: 35px;
+left: 80px;
+top: 172px;
 
+font-size: 20px;
+line-height: 27px;
+text-align: center;
+
+color: #000000;
+}
 </style>
 </head>
 <body>
@@ -161,9 +186,9 @@ background: #202020;
 				<div class="point3"></div>
 				<div class="point4"></div>
 				<a class="menu-item1"  href="/" class="flex items-center px-3"><span>HOME</span></a>
-				<a class="menu-item2" href="../article/list?boardId=1"><span>나만의 명상방법</span></a>
-				<a class="menu-item3" href="../article/list?boardId=2"><span>좋은글</span></a>			
-				<a class="menu-item4" href="../article/list?boardId=3"><span>자유</span></a>
+				<a class="menu-item2" href="/usr/article/list?boardId=1"><span>나만의 명상방법</span></a>
+				<a class="menu-item3" href="/usr/article/list?boardId=2"><span>좋은글</span></a>			
+				<a class="menu-item4" href="/usr/article/list?boardId=3"><span>자유</span></a>
 				<c:if test="${!rq.isLogined()}">					
 					<a class="menu-item5" href="${rq.loginUri}">
 						<span>로그인</span>
@@ -173,14 +198,24 @@ background: #202020;
 					</a>						
 				</c:if>	
 				<c:if test="${rq.isLogined()}">						
-					<a class="menu-item5" href="../member/myPage">
+					<a class="menu-item5" href="/usr/member/myPage">
 						<span>MYPAGE</span>
 					</a>
 					<a class="menu-item6" href="${rq.logoutUri}">
 						<span>LOGOUT</span>
 					</a>						
-				</c:if>									
+				</c:if>
+				<c:if test="${rq.isAdmin()}">
+					<a class="menu-item7" href="/adm/member/list">
+						<span>관리자</span>
+					</a>	
+				</c:if>											
 			</div>																		
-		</header>		
+		</header>	
+		<section class="my-3 text-2xl">
+			<div class="pageTitle">
+				<h1>${pageTitle }&nbsp;</h1>
+			</div>
+		</section>	
 		<main>
 		<div class="height"></div>

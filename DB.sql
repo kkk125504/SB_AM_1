@@ -92,13 +92,21 @@ CREATE TABLE board (
 INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
-`code` = 'notice',
-`name` = '공지사항';
+`code` = 'MyMeditation',
+`name` = '나만의 명상방법';
+
 INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
-`code` = 'free1',
+`code` = 'good writing',
+`name` = '좋은글';
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'free',
 `name` = '자유게시판';
+
 # 게시물 테이블에 boardId 칼럼 추가
 ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER `memberId`;
 # 1,2 번 게시물을 공지사항 게시물로 수정
