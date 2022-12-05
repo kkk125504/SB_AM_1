@@ -2,7 +2,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="관리자 페이지" />
 <%@ include file="../../usr/common/head.jspf"%>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<style>
+.chart-box{
+width: 500px;
+height : 500px;
+}
+</style>
 <section class="mt-8 text-xl">
 	<div class="container mx-auto px-3">
 		<div class="flex">
@@ -30,7 +36,7 @@
 			</form>
 		</div>
 		<div class="table-box-type-1 mt-3">
-			<table class="table table-fixed w-full">
+			<table>
 				<colgroup>
 					<col width="100" />
 					<col width="100" />
@@ -54,8 +60,8 @@
 
 				<tbody>
 					<c:forEach var="member" items="${members }">
-						<tr class="hover">
-							<th><input type="checkbox" class="checkbox-member-id" value="${member.id }" /></th>
+						<tr>
+							<td><input type="checkbox" class="checkbox-member-id" value="${member.id }" /></td>
 							<td>${member.id}</td>
 							<td>${member.forPrintType1RegDate}</td>
 							<td>${member.forPrintType1UpdateDate}</td>
@@ -129,5 +135,137 @@
 		document['do-delete-members-form'].ids.value = values.join(',');
 		document['do-delete-members-form'].submit();
 	});
+</script>
+
+<section>
+	<div class="container mx-auto text-xl flex mt-10 justify-around">
+		<div>
+			<div class ="flex justify-center mb-6">
+				<span>게시물 통계</span>
+			</div>			
+			<span>기간 : </span>
+			<input type="date" class ="currentDate input input-bordered max-w-xs" value="" name="startDateForArticleStatistics">
+			<span> ~ </span>
+			<input type="date" class ="currentDate input input-bordered max-w-xs" value="" name="lastDateForArticleStatistics">
+		
+			<span class="ml-6">게시판 선택 :</span>
+			<select id ="boardId" class="select select-bordered">
+				<option value="0">전체</option>									
+				<option value="1">나만의 명상방법</option>
+				<option value="2">좋은글 / 좋은 글귀</option>
+				<option value="3">자유</option>
+			</select>
+			<button type="button" class="btn btn-active btn-ghost" onclick="ArticleStatisticsChart();">조회</button>				
+			<div class="chart-box article-chart-box  mx-auto mt-8">
+				<canvas id="article-chart" width="50" height="50"></canvas>
+			</div>
+		</div>
+		
+		<div>
+			<div class ="flex justify-center mb-6">
+				<span>회원 통계</span>
+			</div>				
+			<span>기간 : </span>
+			<input type="date"  class ="currentDate input input-bordered max-w-xs" value="" name="startDateForMemberStatistics">
+			<span> ~ </span>
+			<input type="date"  class ="currentDate input input-bordered max-w-xs" value="" name="lastDateForMemberStatistics">		
+			<button type="button" class="btn btn-active btn-ghost" onclick="MemberStatisticsChart();">조회</button>				
+			<div class="chart-box member-chart-box mx-auto mt-8">
+				<canvas id="member-chart" width="50" height="50"></canvas>
+			</div>
+		</div>				
+	</div>
+</section>
+
+<script>
+//통계 날짜 선택시 현재 날짜 입력 
+let elements = document.getElementsByClassName('currentDate');
+
+let len = elements.length;
+for (let i = 0; i < len; i++){
+	 elements.item(i).value = new Date().toISOString().slice(0, 10);
+}
+</script>
+<script>
+//게시물 통계 차트 생성
+function ArticleStatisticsChart(){
+	$('.chartjs-hidden-iframe').remove();
+	$('.article-chart-box').html('<canvas id="article-chart" width="50" height="50"></canvas>');
+	$.get('/adm/statistics/article', {
+		startDate : $('input[name=startDateForArticleStatistics]').val(),
+		lastDate : $('input[name=lastDateForArticleStatistics]').val(),
+		boardId : $('#boardId').val(),
+		ajaxMode : 'Y'
+	}, function(data) {			
+			new Chart(document.getElementById("article-chart"), {
+			    type: 'bar',
+			    data: {
+			      labels: ["생성글 수", "총 조회수", "평균 조회수", "최고 조회수"],
+			      datasets: [
+			        {
+			          label: "",
+			          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
+			          data: [data.articlesCount,data.totalViews,data.averageViews,data.topViews]
+			        }
+			      ]
+			    },
+			    options: {
+			      legend: { display: false },
+			      title: {
+			        display: false,
+			        text: '게시물 통계'
+			      },
+			      scales : {
+			  		yAxes : [ {
+			  			ticks : {
+			  				beginAtZero : true, // 0부터 시작하게 
+			  				stepSize: 1   // 1 씩 증가하도록 설정
+			  			}
+			  		} ]
+			      }
+			    }
+			});
+		}, 'json');	
+	}
+// 회원 통계 차트 생성
+function MemberStatisticsChart(){
+	$('.chartjs-hidden-iframe').remove();
+	$('.member-chart-box').html('<canvas id="member-chart" width="50" height="50"></canvas>');
+	$.get('/adm/statistics/member', {
+		startDate : $('input[name=startDateForMemberStatistics]').val(),
+		lastDate : $('input[name=lastDateForMemberStatistics]').val(),
+		ajaxMode : 'Y'
+	}, function(data) {			
+			new Chart(document.getElementById("member-chart"), {
+			    type: 'bar',
+			    data: {
+			      labels: ["신규 회원 수", "탈퇴한 회원 수", "총 회원 수", "총 탈퇴한 회원수"],
+			      datasets: [
+			        {
+			          label: "",
+			          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
+			          data: [data.newMembersCount, data.withdrawalMembersCount ,data.totalMembersCount, data.totalWithdrawalMembersCount]
+			        }
+			      ]
+			    },
+			    options: {
+			      legend: { display: false },
+			      title: {
+			        display: false,
+			        text: '회원 수 통계'
+			      },
+			      scales : {
+			  		yAxes : [ {
+			  			ticks : {
+			  				beginAtZero : true, // 0부터 시작하게 
+			  				stepSize: 1   // 1 씩 증가하도록 설정
+			  			}
+			  		} ]
+			      }
+			    }
+			});
+		}, 'json');	
+	}
+	
 </script>
 <%@ include file="../../usr/common/foot.jspf"%>

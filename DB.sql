@@ -78,6 +78,10 @@ ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER `updateD
 UPDATE article
 SET memberId = 2
 WHERE memberId = 0;
+
+# 게시물 테이블에 조회수 추가
+ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0;
+
 # 게시판 테이블 생성
 CREATE TABLE board (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -351,6 +355,17 @@ group by RP.relTypeCode, RP.relId
 SELECT *
 FROM reactionPoint AS RP
 GROUP BY RP.relTypeCode, RP.relId
+*/
+
+/*
+SELECT IFNULL(COUNT(*),0) AS 'new members', 
+(SELECT COUNT(*) FROM `member`
+WHERE updateDate BETWEEN CONCAT('2022-12-04', ' 20:00:00') AND CONCAT('2022-12-05', ' 23:59:59')
+AND delStatus = 1 ) AS '탈퇴한 회원수',
+(SELECT COUNT(*) FROM `member`) AS '총 회원 수',
+(SELECT COUNT(IF(delStatus > 0, delStatus,NULL)) FROM `member`) AS '총 탈퇴한 회원 수'
+FROM `member`
+WHERE regDate BETWEEN CONCAT('2022-12-04', ' 20:00:00') AND CONCAT('2022-12-05', ' 23:59:59')
 */
 
 SELECT * FROM article;

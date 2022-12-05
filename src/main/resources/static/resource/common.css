@@ -34,7 +34,7 @@ html > body, html>body .toast-ui-editor, html>body .toastui-editor-contents, htm
 	border-bottom : 1px solid black;
 	padding : 10px;
 	text-align: center;
-		border-color: grey;
+	border-color: grey;
 }
 
 .table-box-type-1 > table tr:hover{

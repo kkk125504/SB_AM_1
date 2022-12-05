@@ -32,7 +32,7 @@
 			</form>
 		</div>
 		<div class="table-box-type-1 mt-2">
-			<table border="2">
+			<table>
 				<col width ="80" />
 				<col width ="200"/>
 				<col />
