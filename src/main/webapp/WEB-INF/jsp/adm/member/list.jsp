@@ -225,7 +225,7 @@ function ArticleStatisticsChart(){
 			      }
 			    }
 			});
-		}, 'json');	
+		}, 'json');		
 	}
 // 회원 통계 차트 생성
 function MemberStatisticsChart(){

@@ -40,8 +40,9 @@
 						<td>
 							<select name="boardId" class="select select-bordered">
 								<option disabled>게시판을 선택해주세요</option>
-								<option value="1">공지사항</option>
-								<option value="2">자유</option>
+								<option value="1">나만의 명상방법</option>
+								<option value="2">좋은글</option>
+								<option value="3">자유</option>
 							</select>
 							<input type="checkbox" name="secret">&nbsp;비밀글 설정
 						</td>
