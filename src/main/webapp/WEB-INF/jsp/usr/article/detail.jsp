@@ -113,14 +113,14 @@
 	        success: function(data) {	        
 			  if(data.data1 == null){
 			  replyListContent += "";
-			  $('.replyList').html(replyContent);
+			  $('.replyList').html(replyListContent);
 			  return;
   			  }
 			  
  			 $(data.data1).each(function(){
 			  var loginedMemberId = ${rq.loginedMemberId};
 			  var replyMemberId= this.memberId;
-			  var params__reply = '\''+this.id+'/'+this.regDate+'/'+this.body+'/'+this.extra__writerName+'/'+this.relTypeCode+'\'';			
+			  var params__reply = '\''+this.id+'/'+this.regDate+'/'+this.forPrintBody+'/'+this.extra__writerName+'/'+this.relTypeCode+'\'';			
 			  replyIds[index] = this.id;
   			  index++;
   			  replyListContent += '<div class="divider"></div>';
@@ -141,12 +141,12 @@
 			  replyListContent += '</div>';
 			  replyListContent += '<div><span class="font-extrabold">'+this.regDate +'</span></div>';
 	   		  replyListContent += '<div><span class="input input-bordered w-full max-w-xs">';  
-			  replyListContent += this.body+'</span></div>';  
+			  replyListContent += this.forPrintBody+'</span></div>';  
 			  replyListContent += '</div>';
    			  
    			  replyListContent += '<div id="ReOfRe__WriteForm'+this.id+'"></div>';
 			  
-			  // 댓글의 댓글 리스트
+			  // 댓글의 답글 리스트
 			  replyListContent += '<div id= re'+this.id+'></div>';
 			  });  
 			  $('.replyList').html(replyListContent);
@@ -156,61 +156,28 @@
 	
 	// 댓글 작성
 	function Reply__Write() {  
-	  $.get('../reply/doWrite', {
-	  relId : params.id,
-	  relTypeCode : $('input[name=relTypeCode]').val(),
-	  body : $('textarea[name=replyBody]').val()
-	  }, function(data) {
-	  if(data.fail){
-	  	alert(data.msg);
-	  	return;
-	  	}	  
-	  }, 'json');	
-	  Reply__List();
-	  ReOfRe__List();
+	 $.ajax({
+	        type: "POST",
+	        url: "../reply/doWrite",
+	        dataType: "json",
+	    	async : false,
+	    	data : {"relId" : params.id, "relTypeCode" : $('input[name=relTypeCode]').val(), "body" : $('textarea[name=replyBody]').val() },
+	        error: function() {
+	          console.log('통신실패!!');
+	        },
+	        success: function(data) {
+	      	 if(data.fail){
+      		  	alert(data.msg);
+      		  	return;
+	      	}	        		  
+	        }
+	 	});
+	 	$('textarea[name=replyBody]').val('');
+	 	Reply__List();
+		ReOfRe__List();	
 	}
-	
-	// 댓글 수정 폼
- 	function Reply__ModifyForm(params__reply) {	 	
-	   var params__replySplit = params__reply.split('/');
-	   var replyId = params__replySplit[0];
-	   var regDate = params__replySplit[1];
-	   var body = params__replySplit[2];
-	   var replyWriter = params__replySplit[3];
-	   var replyModifyContent= '';
-	   replyModifyContent += '<form>'
-	   replyModifyContent += '<div>';
-	   replyModifyContent += '<span class="font-extrabold">';
-	   replyModifyContent += replyWriter +'</span>';		  				 		 		 
-	   replyModifyContent += '</div>';
-	   replyModifyContent += '<div><span class="font-extrabold">'+ regDate +'</span></div>';
-	   replyModifyContent += '<div>';
-	   replyModifyContent += '<input type="hidden" name="id" value="'+replyId+'"/>';
-	   replyModifyContent += '<input class="input input-bordered w-full max-w-xs" name="body" value="'+body+'"/>';
-	   replyModifyContent += '<button type="button" onclick="Reply__Modify(form);">수정</button>';
-	   replyModifyContent += '<button type="button" onclick="Reply__List(); ReOfRe__List();">취소</button>';
-	   replyModifyContent += '</form>';
-	   
-	   $('#reply'+replyId).html(replyModifyContent);   
- 	}
-	
-	// 댓글,답글쓰기 삭제
-	function Reply__Delete(params__reply) {
-	 var params__replySplit = params__reply.split('/');
-	 var id = params__replySplit[0];
-	 var relTypeCode = params__replySplit[4];
-	  $.get('../reply/doDelete', {
-	  id : id,
-	  relTypeCode : relTypeCode,
-	  ajaxMode : 'Y'
-	  }, function(data) { 
-		  Reply__List();
-		  ReOfRe__List();
-	  }, 'json');
-	 
-	}
-		
-	// 댓글 수정 폼
+
+	// 댓글 수정
 	function Reply__Modify(form) {					
 		$.get('../reply/doModify', {
 			id : form.id.value,
@@ -222,9 +189,60 @@
 			}
 			Reply__List();
 			ReOfRe__List();
-		}, 'json');	
+		}, 'json');			
 	}
 	
+	// 댓글 수정 폼
+ 	function Reply__ModifyForm(params__reply) {	 	
+	   var params__replySplit = params__reply.split('/');
+	   var replyId = params__replySplit[0];
+	   var regDate = params__replySplit[1];
+	   var body = params__replySplit[2];
+	   body= body.replace("<br>", "&#10;");
+	   var replyWriter = params__replySplit[3];
+	   var replyModifyContent= '';
+	   replyModifyContent += '<form>'
+	   replyModifyContent += '<div>';
+	   replyModifyContent += '<span class="font-extrabold">';
+	   replyModifyContent += replyWriter +'</span>';		  				 		 		 
+	   replyModifyContent += '</div>';
+	   replyModifyContent += '<div><span class="font-extrabold">'+ regDate +'</span></div>';
+	   replyModifyContent += '<div>';
+	   replyModifyContent += '<input type="hidden" name="id" value="'+replyId+'"/>';
+	   replyModifyContent += '<textarea class="input input-bordered w-full max-w-xs" name="body">'+body+'</textarea>';
+	   replyModifyContent += '<button type="button" onclick="Reply__Modify(form);">수정</button>';
+	   replyModifyContent += '<button type="button" onclick="Reply__List(); ReOfRe__List();">취소</button>';
+	   replyModifyContent += '</form>';
+	   
+	   $('#reply'+replyId).html(replyModifyContent);   
+ 	}	
+
+	//댓글,답글쓰기 삭제
+	function Reply__Delete(params__reply) {		
+	 var params__replySplit = params__reply.split('/');
+ 	 var id = params__replySplit[0];
+ 	 var relTypeCode = params__replySplit[4];
+	 $.ajax({
+	        type: "POST",
+	        url: "../reply/doDelete",
+	        dataType: "json",
+	    	async : false,
+	    	data : {"id" : id, "relTypeCode" : relTypeCode},
+	        error: function() {
+	          console.log('통신실패!!');
+	        },
+	        success: function(data) {
+	      	 if(data.fail){
+   		  	 alert(data.msg);
+   		  	  return;
+	      	 }
+	      	Reply__List();
+			ReOfRe__List();
+	        }
+	 	});
+	 	
+	}
+			
 	// 댓글의 답글 리스팅
 	function ReOfRe__List(){
 	  if(replyIds.length > 0){
@@ -270,8 +288,7 @@
  	 }
    }  
 }
-  	
-  	
+  	 	
 	//답글쓰기 
 	function ReOfRe__Write(replyId) {
 	  $.get('../reply/doWrite', {
