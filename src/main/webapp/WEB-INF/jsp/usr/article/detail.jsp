@@ -94,7 +94,7 @@
 </script>
 	
 <script>
-	//댓글리스트 출력	
+	// 댓글리스트 출력	
 	var replyIds = [];
 	var index = 0;
 	function Reply__List() {
@@ -128,12 +128,12 @@
   			  replyListContent += '<div><span class="font-extrabold">';
   			  replyListContent += this.extra__writerName +'</span>';
 			  
-			  //댓글 삭제, 수정버튼
+			  // 댓글 삭제, 수정버튼
 			  if(loginedMemberId == replyMemberId){
 				  replyListContent += '<button class="ml-4" onclick="Reply__ModifyForm('+params__reply+');">수정</button>';			   
 				  replyListContent += '<button class="ml-2" onclick="Reply__Delete('+params__reply+');">삭제</button>';
 			  }
-			  //답글쓰기 버튼 노출
+			  // 답글쓰기 버튼 노출
 			  if(${rq.isLogined()}){
 				  replyListContent += '<button class="ml-20" onclick="ReOfRe__WriteForm('+this.id+')">답글쓰기</button>';
 			  }
@@ -154,7 +154,78 @@
 	    });
 	}
 	
-	//댓글의 답글 리스팅
+	// 댓글 작성
+	function Reply__Write() {  
+	  $.get('../reply/doWrite', {
+	  relId : params.id,
+	  relTypeCode : $('input[name=relTypeCode]').val(),
+	  body : $('textarea[name=replyBody]').val()
+	  }, function(data) {
+	  if(data.fail){
+	  	alert(data.msg);
+	  	return;
+	  	}	  
+	  }, 'json');	
+	  Reply__List();
+	  ReOfRe__List();
+	}
+	
+	// 댓글 수정 폼
+ 	function Reply__ModifyForm(params__reply) {	 	
+	   var params__replySplit = params__reply.split('/');
+	   var replyId = params__replySplit[0];
+	   var regDate = params__replySplit[1];
+	   var body = params__replySplit[2];
+	   var replyWriter = params__replySplit[3];
+	   var replyModifyContent= '';
+	   replyModifyContent += '<form>'
+	   replyModifyContent += '<div>';
+	   replyModifyContent += '<span class="font-extrabold">';
+	   replyModifyContent += replyWriter +'</span>';		  				 		 		 
+	   replyModifyContent += '</div>';
+	   replyModifyContent += '<div><span class="font-extrabold">'+ regDate +'</span></div>';
+	   replyModifyContent += '<div>';
+	   replyModifyContent += '<input type="hidden" name="id" value="'+replyId+'"/>';
+	   replyModifyContent += '<input class="input input-bordered w-full max-w-xs" name="body" value="'+body+'"/>';
+	   replyModifyContent += '<button type="button" onclick="Reply__Modify(form);">수정</button>';
+	   replyModifyContent += '<button type="button" onclick="Reply__List(); ReOfRe__List();">취소</button>';
+	   replyModifyContent += '</form>';
+	   
+	   $('#reply'+replyId).html(replyModifyContent);   
+ 	}
+	
+	// 댓글,답글쓰기 삭제
+	function Reply__Delete(params__reply) {
+	 var params__replySplit = params__reply.split('/');
+	 var id = params__replySplit[0];
+	 var relTypeCode = params__replySplit[4];
+	  $.get('../reply/doDelete', {
+	  id : id,
+	  relTypeCode : relTypeCode,
+	  ajaxMode : 'Y'
+	  }, function(data) { 
+		  Reply__List();
+		  ReOfRe__List();
+	  }, 'json');
+	 
+	}
+		
+	// 댓글 수정 폼
+	function Reply__Modify(form) {					
+		$.get('../reply/doModify', {
+			id : form.id.value,
+			body : form.body.value
+		}, function(data) {
+			if(data.fail){
+				alert(data.data.msg);
+				return;
+			}
+			Reply__List();
+			ReOfRe__List();
+		}, 'json');	
+	}
+	
+	// 댓글의 답글 리스팅
 	function ReOfRe__List(){
 	  if(replyIds.length > 0){
 	  for(let i  = 0; i < replyIds.length; i++){	
@@ -199,21 +270,7 @@
  	 }
    }  
 }
-  	//댓글 작성
-	function Reply__Write() {  
-	  $.get('../reply/doWrite', {
-	  relId : params.id,
-	  relTypeCode : $('input[name=relTypeCode]').val(),
-	  body : $('textarea[name=replyBody]').val()
-	  }, function(data) {
-	  if(data.fail){
-	  	alert(data.msg);
-	  	return;
-	  	}	  
-	  }, 'json');	
-	  Reply__List();
-	  ReOfRe__List();
-	}
+  	
   	
 	//답글쓰기 
 	function ReOfRe__Write(replyId) {
@@ -237,61 +294,6 @@
   		content += '<button type="button" class="mx-4" onclick="ReOfRe__Write('+replyId+')">작성</button>';
   		content += '<button type="button" onclick="Reply__List(); ReOfRe__List();">취소</button></div>';
   		$('#ReOfRe__WriteForm'+replyId).html(content);
-	}
-	
-  	// 댓글 수정 폼
- 	function Reply__ModifyForm(params__reply) {	 	
-	   var params__replySplit = params__reply.split('/');
-	   var replyId = params__replySplit[0];
-	   var regDate = params__replySplit[1];
-	   var body = params__replySplit[2];
-	   var replyWriter = params__replySplit[3];
-	   var replyModifyContent= '';
-	   replyModifyContent += '<form>'
-	   replyModifyContent += '<div>';
-	   replyModifyContent += '<span class="font-extrabold">';
-	   replyModifyContent += replyWriter +'</span>';		  				 		 		 
-	   replyModifyContent += '</div>';
-	   replyModifyContent += '<div><span class="font-extrabold">'+ regDate +'</span></div>';
-	   replyModifyContent += '<div>';
-	   replyModifyContent += '<input type="hidden" name="id" value="'+replyId+'"/>';
-	   replyModifyContent += '<input class="input input-bordered w-full max-w-xs" name="body" value="'+body+'"/>';
-	   replyModifyContent += '<button type="button" onclick="Reply__Modify(form);">수정</button>';
-	   replyModifyContent += '<button type="button" onclick="Reply__List(); ReOfRe__List();">취소</button>';
-	   replyModifyContent += '</form>';
-	   
-	   $('#reply'+replyId).html(replyModifyContent);   
- 	}
-	
-	//댓글,답글쓰기 삭제
-	function Reply__Delete(params__reply) {
-	 var params__replySplit = params__reply.split('/');
-	 var id = params__replySplit[0];
-	 var relTypeCode = params__replySplit[4];
-	  $.get('../reply/doDelete', {
-	  id : id,
-	  relTypeCode : relTypeCode,
-	  ajaxMode : 'Y'
-	  }, function(data) { 
-		  Reply__List();
-		  ReOfRe__List();
-	  }, 'json');
-	 
-	}
-		
-	// 댓글 수정 폼
-	function Reply__Modify(form) {					
-		$.get('../reply/doModify', {
-			id : form.id.value,
-			body : form.body.value
-		}, function(data) {
-			if(data.fail){
-				alert(data.data.msg);
-				return;
-			}
-			Reply__List();
-			ReOfRe__List();
-		}, 'json');	
 	}
 					
 	$(function() {
