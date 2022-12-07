@@ -188,7 +188,7 @@ for (let i = 0; i < len; i++){
 </script>
 <script>
 //게시물 통계 차트 생성
-function ArticleStatisticsChart(){
+function ArticleStatisticsChart(){	
 	$('.chartjs-hidden-iframe').remove();
 	$('.article-chart-box').html('<canvas id="article-chart" width="50" height="50"></canvas>');
 	$.get('/adm/statistics/article', {
@@ -196,7 +196,11 @@ function ArticleStatisticsChart(){
 		lastDate : $('input[name=lastDateForArticleStatistics]').val(),
 		boardId : $('#boardId').val(),
 		ajaxMode : 'Y'
-	}, function(data) {			
+	}, function(data) {
+		if (data.resultCode == 'F-A'){
+			alert(data.msg);
+			location.replace('/');
+		}		
 			new Chart(document.getElementById("article-chart"), {
 			    type: 'bar',
 			    data: {
@@ -235,7 +239,11 @@ function MemberStatisticsChart(){
 		startDate : $('input[name=startDateForMemberStatistics]').val(),
 		lastDate : $('input[name=lastDateForMemberStatistics]').val(),
 		ajaxMode : 'Y'
-	}, function(data) {			
+	}, function(data) {
+		if (data.resultCode == 'F-A'){
+			alert(data.msg);
+			location.replace('/');
+		}
 			new Chart(document.getElementById("member-chart"), {
 			    type: 'bar',
 			    data: {

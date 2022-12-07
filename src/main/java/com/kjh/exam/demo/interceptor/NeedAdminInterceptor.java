@@ -23,7 +23,7 @@ public class NeedAdminInterceptor implements HandlerInterceptor {
 				resp.getWriter().append("{\"resultCode\":\"F-A\",\"msg\":\"관리자로 로그인 후 이용해주세요\"}");
 			} else {
 				String afterLoginUri = rq.getAfterLoginUri();
-				rq.printReplaceJs("관리자로 로그인 후 이용해주세요", "/adm/member/login?afterLoginUri=" + afterLoginUri);
+				rq.printReplaceJs("관리자로 로그인 후 이용해주세요", "/");
 			}
 			return false;
 		}
