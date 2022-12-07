@@ -174,6 +174,7 @@ public class Rq {
 		case "/usr/article/write":
 		case "/usr/article/modify":
 		case "/usr/member/myPage":
+		case "/usr/member/modify":
 		case "/adm/member/list":
 			return Ut.getUriEncoded("/");
 		}

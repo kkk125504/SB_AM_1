@@ -20,12 +20,13 @@ public class UsrMemberController {
 	@Autowired
 	private Rq rq;
 
-	// 액션 메소드
+	
 	@RequestMapping("/usr/member/join")
 	public String showJoin() {
 		return "usr/member/join";
 	}
 	
+	// 회원가입
 	@RequestMapping("usr/member/doJoin")
 	@ResponseBody
 	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
@@ -214,7 +215,7 @@ public class UsrMemberController {
 		if (checkMemberModifyAuthKeyRd.isFail()) {
 			return rq.jsHistoryBackOnView(checkMemberModifyAuthKeyRd.getMsg());
 		}
-
+		
 		ResultData modifyRd = memberService.modify(rq.getLoginedMemberId(), loginPw, nickname, cellphoneNum, email);
 
 		return rq.jsReplace(modifyRd.getMsg(), "/");

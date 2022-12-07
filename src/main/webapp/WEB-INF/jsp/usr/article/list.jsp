@@ -51,7 +51,7 @@
 					<c:if test="${board.id != 3 }">
 						<c:forEach var="article" items="${bestArticles}">
 							<tr class="bg-red-50 text-red-500">
-								<td><div class="badge badge-secondary">추천</div></td>
+								<td><div class="badge badge-secondary">TOP3</div></td>
 								<td>${article.forPrintType1RegDate}</td>
 								<td>
 									<a class="hover:underline block w-full truncate" href="${rq.getArticleDetailUriFromArticleList(article)}">${article.title}

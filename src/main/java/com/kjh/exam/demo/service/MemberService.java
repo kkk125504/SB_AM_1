@@ -62,7 +62,10 @@ public class MemberService {
 	}
 
 	public ResultData modify(int actorId, String loginPw, String nickname, String cellphoneNum, String email) {
-		loginPw = Ut.sha256(loginPw);
+		if(loginPw != null) {
+			loginPw = Ut.sha256(loginPw);
+		}
+		
 		memberRepository.modify(actorId, loginPw, nickname, cellphoneNum, email);
 		return ResultData.from("S-1", "회원정보가 수정 되었습니다.");
 	}

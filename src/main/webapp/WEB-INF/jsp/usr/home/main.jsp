@@ -286,6 +286,33 @@ background: #D9D9D9;
 	<div class="brush2"></div>
 </section>
 
+<div class="layer-bg">
+	<div class="layer">
+		<h2 class="text-center">명상 라이프를 즐기는 사람의 커뮤니티 입니다.</h2>
+		<h3 class="text-center">주의 사항</h3>
+		<div class ="flex flex-col items-center">			
+			<span>1. 비방글 또는 홍보글 자제</span>
+			<span>2. 명상에 방해가 되거나 도움이 되지 않는 글 자제</span>
+			<span>3. 광고/비난/비하/욕설이 포함된 글 또는 댓글 자제</span>
+			<span>4. 상품정보 제고의 범위를 넘어서는 상업성 높은 광고 자제</span>
+			<span>5. 타 카페, 블로그, 사이트 홍보글 자제</span>			
+		</div>
+		<button class="close-btn">닫기</button>
+	</div>
+</div>
+<script>
+$(function() {
+	$('.layer').show();
+	$('.layer-bg').show();
+});
+
+$('.close-btn').click(function() {
+	$('.layer').hide();
+	$('.layer-bg').hide();
+	//	$('.layer').css('display', 'none');
+});
+</script>
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2fc9b373fc33a2fd0bd584d5fb81482f&libraries=services,clusterer,drawing"></script>
 <script>
 	// 마커를 담을 배열입니다

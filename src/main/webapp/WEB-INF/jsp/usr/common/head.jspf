@@ -191,7 +191,7 @@ color: #000000;
 				<a class="menu-item4" href="/usr/article/list?boardId=3"><span>자유</span></a>
 				<c:if test="${!rq.isLogined()}">					
 					<a class="menu-item5" href="${rq.loginUri}">
-						<span>로그인</span>
+						<span>LOGIN</span>
 					</a>											
 					<a class="menu-item6"href="${rq.joinUri }">
 						<span>회원가입</span>
