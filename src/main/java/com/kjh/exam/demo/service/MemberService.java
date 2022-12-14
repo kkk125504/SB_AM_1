@@ -134,7 +134,8 @@ public class MemberService {
 		}
 	}
 
-	private void deleteMember(Member member) {
+	public void deleteMember(Member member) {
 		memberRepository.deleteMember(member.getId());
 	}
+
 }

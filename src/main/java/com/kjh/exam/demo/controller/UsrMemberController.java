@@ -20,18 +20,18 @@ public class UsrMemberController {
 	@Autowired
 	private Rq rq;
 
-	
+	// 회원가입 뷰로 이동
 	@RequestMapping("/usr/member/join")
 	public String showJoin() {
 		return "usr/member/join";
-	}
+	}	
 	
-	// 회원가입
+	// 회원가입 처리
 	@RequestMapping("usr/member/doJoin")
 	@ResponseBody
 	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
 			String email, @RequestParam(defaultValue = "/") String afterLoginUri) {
-
+		
 		if (Ut.empty(loginId)) {
 			return rq.jsHistoryBack("F-1", "아이디를 입력해주세요");
 		}
@@ -219,6 +219,18 @@ public class UsrMemberController {
 		ResultData modifyRd = memberService.modify(rq.getLoginedMemberId(), loginPw, nickname, cellphoneNum, email);
 
 		return rq.jsReplace(modifyRd.getMsg(), "/");
+	}
+	
+	@RequestMapping("/usr/member/doDeleteMember")
+	@ResponseBody
+	public String doDeleteMember() {
+		Member loginedMember = rq.getLoginedMember();
+		
+		memberService.deleteMember(loginedMember);
+		
+		rq.logout();
+		
+		return rq.jsReplace("회원 탈퇴 성공하였습니다.", "/");
 	}
 	
 	@RequestMapping("/usr/member/getLoginIdDup")

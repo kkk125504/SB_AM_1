@@ -122,7 +122,8 @@
 			</table>
 
 			<div class= "btns flex justify-end">
-				<button class ="btn-text-link mx-4 btn btn-active btn-ghost" type="submit">회원정보수정</button>					
+				<button class ="btn-text-link mx-4 btn btn-active btn-ghost" type="submit">회원정보수정</button>
+				<a href="../member/doDeleteMember" class="btn btn-active btn-ghost mr-4" onclick="if(confirm('회원 탈퇴 하시겠습니까?') == false) return false;">회원 탈퇴</a>					
 				<button class ="btn-text-link btn btn-active btn-ghost" type="button" onclick="history.back()">뒤로가기</button>
 			</div>
 		</form>
